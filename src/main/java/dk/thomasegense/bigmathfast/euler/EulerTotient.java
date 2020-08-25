@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import dk.thomasegense.bigmathfast.primes.MillerRabin;
 import dk.thomasegense.bigmathfast.primes.PollardRho;
-import dk.thomasegense.bigmathfast.primes.ecm.ecm;
+import dk.thomasegense.bigmathfast.primes.ecm.Ecm;
 
 
 /*
@@ -20,6 +22,10 @@ import dk.thomasegense.bigmathfast.primes.ecm.ecm;
  */
 
 public class EulerTotient {
+  
+    
+  private static ExecutorService pool = null;    
+  
   
   private final static BigInteger B0 = new BigInteger("0");
   private final static BigInteger B1 = new BigInteger("1");
@@ -111,6 +117,11 @@ public class EulerTotient {
   }
 
 
+  
+  
+  /*  
+   * This method will be called by itself recursive
+   */
   private static ArrayList<BigInteger> inverseEulerTotentOdds(BigInteger b){
 
       //Use cache
@@ -187,7 +198,10 @@ public class EulerTotient {
        return new  ArrayList<BigInteger>();
       
     }
-   
+     pool = Executors.newFixedThreadPool(8); // 8 threads
+    
+     
+    
     //First get all odds
     ArrayList<BigInteger> results=inverseEulerTotentOdds(b);
      
@@ -364,7 +378,7 @@ private static boolean doesDivide(BigInteger b1, BigInteger b2) {
     
     private static ArrayList<BigInteger> factor (BigInteger b) {
     if (b.toString().length() > 22) {
-        return ecm.factor(b);
+        return Ecm.factor(b);
     }else {
     System.out.println("factoring:"+b);
         return PollardRho.factor(b);        
@@ -372,6 +386,25 @@ private static boolean doesDivide(BigInteger b1, BigInteger b2) {
         
 
     }    
-  }
+  
+    
 
+}
+
+
+class CalculateOddThread implements Runnable    
+{ 
+    private BigInteger odd; 
+      
+    public CalculateOddThread(BigInteger odd) 
+    { 
+        this.odd = odd; 
+    } 
+    
+    public void run() 
+    { 
+        
+    }
+    
+}
 

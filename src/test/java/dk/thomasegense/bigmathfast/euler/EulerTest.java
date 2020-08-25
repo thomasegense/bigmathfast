@@ -46,7 +46,7 @@ public class EulerTest {
         
         for (int i = 1;i<maxValue;i++) {
             BigInteger current = new BigInteger (""+i);            
-            ArrayList<BigInteger> solutionsCalculated = EulerTotient.inverseEulerTotient(current, true);
+            ArrayList<BigInteger> solutionsCalculated = EulerTotient.inverseEulerTotient(current);
             Collections.sort(solutionsCalculated);
             ArrayList<BigInteger> solutionsBruteForced = inverseEulerMap.get(current);
             if (solutionsBruteForced == null) {

@@ -7,13 +7,11 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import dk.thomasegense.bigmathfast.primes.ecm.ecm;
+import dk.thomasegense.bigmathfast.primes.ecm.Ecm;
 
-public class PollardRhoTest {
+public class PrimeFactoringBenchMark {
 
-    
-    
-    
+            
     @Test
     void compare() {
 
@@ -27,7 +25,7 @@ public class PollardRhoTest {
             timeRho += (System.currentTimeMillis()-start);
                                 
             start = System.currentTimeMillis();
-            ArrayList<BigInteger> factorEcm= ecm.factor(new BigInteger(number));
+            ArrayList<BigInteger> factorEcm= Ecm.factor(new BigInteger(number));
             timeEcm += (System.currentTimeMillis()-start);
             assertEquals(factorRho, factorEcm);
             System.out.println(timeRho +":"+timeEcm +" number:"+number);                         
