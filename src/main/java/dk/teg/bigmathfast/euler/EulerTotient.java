@@ -1,4 +1,4 @@
-package dk.thomasegense.bigmathfast.euler;
+package dk.teg.bigmathfast.euler;
 
 import java.math.BigInteger;
 import java.util.ArrayList;

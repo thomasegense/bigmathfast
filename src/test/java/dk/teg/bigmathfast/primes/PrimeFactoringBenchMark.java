@@ -1,4 +1,4 @@
-package dk.thomasegense.bigmathfast.primes;
+package dk.teg.bigmathfast.primes;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

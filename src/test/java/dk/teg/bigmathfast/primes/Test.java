@@ -1,4 +1,4 @@
-package dk.thomasegense.bigmathfast.primes;
+package dk.teg.bigmathfast.primes;
 
 import java.math.BigInteger;
 

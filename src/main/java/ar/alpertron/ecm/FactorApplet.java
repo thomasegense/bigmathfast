@@ -1,4 +1,4 @@
-package dk.thomasegense.bigmathfast.primes.ecm;
+package ar.alpertron.ecm;
 
 
 interface FactorApplet

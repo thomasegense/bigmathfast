@@ -1,4 +1,4 @@
-package dk.thomasegense.bigmathfast.primes.ecm;
+package ar.alpertron.ecm;
 
 // Elliptic Curve Method (ECM) Prime Factorization
 //

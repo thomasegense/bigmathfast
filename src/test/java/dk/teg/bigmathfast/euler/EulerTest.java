@@ -1,4 +1,4 @@
-package dk.thomasegense.bigmathfast.euler;
+package dk.teg.bigmathfast.euler;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

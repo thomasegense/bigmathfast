@@ -1,4 +1,4 @@
-package dk.thomasegense.bigmathfast.primes.ecm;
+package ar.alpertron.ecm;
 
 
 // Self-Initializing Quadratic Sieve (SIQS) Factorization Method
