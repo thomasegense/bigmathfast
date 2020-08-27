@@ -472,7 +472,7 @@ public class Ecm  implements Runnable, FactorApplet
         }
       }
       
-      System.out.println("small primes generate");
+      //log.info("generated small primes cache");
       
   }
   
