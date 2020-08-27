@@ -8,9 +8,9 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import dk.thomasegense.bigmathfast.primes.MillerRabin;
-import dk.thomasegense.bigmathfast.primes.PollardRho;
-import dk.thomasegense.bigmathfast.primes.ecm.Ecm;
+import dk.teg.bigmathfast.primes.MillerRabin;
+import dk.teg.bigmathfast.primes.PollardRho;
+import ar.alpertron.ecm.*;
 
 
 /*
