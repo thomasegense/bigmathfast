@@ -35,7 +35,7 @@ public class Ecm  implements Runnable, FactorApplet
   static final int TYP_EC = 300000000;
 
   int digitsInGroup = 6;
-  int numberThreads = 4;
+  int numberThreads = 1; //Changing this number can result in deadlocks! (TEG)
   boolean forcedECM = false;
   final BigInteger SS[] = new BigInteger[4000]; // For intermediate factors 
   final BigInteger PD[] = new BigInteger[4000]; // and prime factors
@@ -426,7 +426,7 @@ public class Ecm  implements Runnable, FactorApplet
   private BigInteger InputFactor = BigInt0;
   private int StepECM;
   static private int indexM, maxIndexM;
-  private int nbrPrimes, indexPrimes;
+  int nbrPrimes, indexPrimes;
   private BigInteger Quad1, Quad2, Quad3, Quad4;
   private boolean Computing3Squares;
   long polynomialsSieved;
