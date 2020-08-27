@@ -2,6 +2,8 @@ package dk.teg.bigmathfast;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import ar.alpertron.ecm.Ecm;
 import dk.teg.bigmathfast.euler.EulerTotient;
@@ -17,6 +19,14 @@ public class BigMathFast {
      * 
      */
     public static void main(String[] args) {
+
+        if (args.length != 1) {
+            System.out.println("Must time a number as input (1 value only)");
+            System.exit(1);                               
+        }
+        
+        //System.out.println(factorize(11111111111111L));
+        
         BigInteger b= new BigInteger(args[0]);
         long start = System.currentTimeMillis();
         ArrayList<BigInteger> factors = Ecm.factor(b);
@@ -35,7 +45,7 @@ public class BigMathFast {
      * A number with 70 digits will be factorized in 30 seconds in worst case.
      *    
      * @see https://en.wikipedia.org/wiki/Pollard%27s_rho_algorithm
-     * @see https://www.alpertron.com.ar/ECM.HTM
+)     * @see https://www.alpertron.com.ar/ECM.HTM
      *   
      * @param b The BigInteger to be factorized
      * @return ArrayList<BigInteger> with the prime factors in sorted order. 
@@ -49,12 +59,34 @@ public class BigMathFast {
           return Ecm.factor(b);                
         }       
     }
-                    
+       
+    
+    /**
+     * This method will factorize an integer into prime factors. 
+     * 
+     * Will use the PollardRho algorithm for small numbers (long)
+     * To factorize large numbers uset the factorize(BigInteger b) method 
+     * 
+    
+     * @see https://en.wikipedia.org/wiki/Pollard%27s_rho_algorithm
+     *   
+     * @param b The BigInteger to be factorized
+     * @return ArrayList<BigInteger> with the prime factors in sorted order. 
+     *  
+     */    
+    public static List<Long> factorize(Long b){        
+             ArrayList<BigInteger> factor = PollardRho.factor(new BigInteger(""+b)); 
+             List<Long>  factorsLong  =factor.stream().map( s ->  s.longValue()).collect(Collectors.toList());
+             return factorsLong;             
+    }
+    
     /**
      * Calculate the Euler Totient (phi) for an number     
-     * Running time is dependant on the factorization of the input number
+     * Running time is dependant on the factorization time of the input number
      * @see https://en.wikipedia.org/wiki/Euler%27s_totient_function    
      *   
+     * The number of solutions depends on the number of divisors (or total number of prime factors).
+     *      
      * @param b The BigInteger to calculate the Euler Totient
      * @return BigInteger The Euler Totient 
      *  
