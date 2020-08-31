@@ -98,7 +98,7 @@ public class BigMathFast {
     
     /**
      * Calculate the Inverse Euler Totient (invphi) for an number
-     * Use algorithm described by Hansraj Gupta and is the fastests known.
+     * Uses algorithm described by Hansraj Gupta and is the fastests known.
      * 
      * @see http://www.new.dli.ernet.in/rawdataupload/upload/insa/INSA_2/20005a81_22.pdf      
      * @see https://en.wikipedia.org/wiki/Euler%27s_totient_function          
