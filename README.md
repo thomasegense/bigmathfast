@@ -7,10 +7,14 @@ TODO
 
 
 
-Factorization time for worse case.
+##Factorization benchmark
 
 | Number of digits  | bigmathfast(ECM) | Math Wolfram      |
 | ------------------| ------------- |----------------------|
+| 30                |               |                      |
+| 40                |               |                      |
+| 50                |               |                      |
+| 60                |               |                      |
 | 70                | 25 seconds    |  21 minutes          |
 | 80                | 6 min 30 sec  |  12 hour 30 minutes  |
 | 90                | 76 minutes    |      ???             |
