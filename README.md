@@ -18,7 +18,7 @@ TODO
 | 70                |  25 sec       |  21 minutes          |
 | 80                |  6 min 30 sec  |  12 hour 30 minutes  |
 | 90                |  76 minutes    |      ???             |
-
+| 100               |  ???         |      ???             |
 
 
 (*) Numbers from benchmark table:
