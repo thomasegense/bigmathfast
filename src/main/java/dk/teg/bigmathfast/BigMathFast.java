@@ -30,7 +30,7 @@ public class BigMathFast {
         BigInteger b= new BigInteger(args[0]);
         long start = System.currentTimeMillis();
         ArrayList<BigInteger> factors = Ecm.factor(b);
-        System.out.println("Factotorization time in millis:"+(System.currentTimeMillis()-start));
+        System.out.println("Factorization time in millis:"+(System.currentTimeMillis()-start));
         System.out.println(factors);          
     }
     
