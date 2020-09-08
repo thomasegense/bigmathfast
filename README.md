@@ -17,7 +17,7 @@ TODO
 | 60                |  4,7 sec      |                      |
 | 70                |  25 sec       |  21 minutes          |
 | 80                |  6 min 30 sec  |  12 hour 30 minutes  |
-| 90                |  76 minutes    |      ???             |
+| 90                |  1 hour 16 minutes    |   6 days 16 hours             |
 | 100               |  ???         |      ???             |
 
 
