@@ -43,9 +43,12 @@ public class BigMathFast {
      * If the number has 22 digits or more, the ECM/Siqs  algorithm will be used.
      * 
      * A number with 70 digits will be factorized in 30 seconds in worst case.
+     * The complexity dependens on the second largest prime factor.
+     * If the second largest prime factor is larger than 45 digits, it can take
+     * many days for factorize.   
      *    
      * @see https://en.wikipedia.org/wiki/Pollard%27s_rho_algorithm
-)     * @see https://www.alpertron.com.ar/ECM.HTM
+)    * @see https://www.alpertron.com.ar/ECM.HTM
      *   
      * @param b The BigInteger to be factorized
      * @return ArrayList<BigInteger> with the prime factors in sorted order. 
