@@ -5,16 +5,20 @@ algorithms know. See benchmark tests below.
 
 ## Factorization
 For numbers less than 22 digits the PollardRho algoritm is used. For numbers larger than 22 digits the algorithm will use ECM/Siqs.
+
 It is the same algorithm decribed here and by same auhor: https://www.alpertron.com.ar/ECM.HTM
 
 Usage:
+
 BigMathFast.factorize(BigInteger b)
 
 ## Euler Totient (phi) and inverse Euler Totient (invphi)
 The inverse euler totient uses the algorithm described by HansRaj Gupta: https://insa.nic.in/writereaddata/UpLoadedFiles/IJPAM/20005a81_22.pdf
 
 Usage:
+
 BigMathFast.inverseEulerTotient(BigInteger b)
+
 BigMathFast.eulerTotient(BigInteger b)
 
 
