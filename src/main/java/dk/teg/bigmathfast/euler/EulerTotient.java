@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import dk.teg.bigmathfast.BigMathFast;
 import dk.teg.bigmathfast.primes.MillerRabin;
 import dk.teg.bigmathfast.primes.PollardRho;
 import ar.alpertron.ecm.*;
@@ -94,7 +95,7 @@ public class EulerTotient {
    */
   public static BigInteger eulerTotient(BigInteger b) {
     
-    ArrayList<BigInteger> factors = factor(b);
+    ArrayList<BigInteger> factors = BigMathFast.factorize(b);
     Map<BigInteger, Integer> primesAndMultiplicity = countMultiplicites(factors);   
 
     BigInteger eulerTotient = B1; 
@@ -131,7 +132,7 @@ public class EulerTotient {
       
       ArrayList<BigInteger> results =   new ArrayList<BigInteger>();
 
-      ArrayList<BigInteger> factors = factor(b);
+      ArrayList<BigInteger> factors = BigMathFast.factorize(b);
       
       Map<BigInteger, Integer> primesAndMultiplicity = countMultiplicites(factors);   
       ArrayList<BigInteger> divisors = getDivisors(primesAndMultiplicity);       
@@ -260,7 +261,7 @@ public class EulerTotient {
       ArrayList<BigInteger>  keepers = new ArrayList<BigInteger>();
 
       for (BigInteger b : numbers) {
-        ArrayList<BigInteger> factors = factor(b);
+        ArrayList<BigInteger> factors = BigMathFast.factorize(b);
         boolean smallFactor = false;
         for (BigInteger factor :factors) {         
           if (factor.compareTo(maxPrimeFactor) <=0) { //TODO, maybe faster to try small divisors than factor
@@ -376,17 +377,6 @@ private static boolean doesDivide(BigInteger b1, BigInteger b2) {
 
     
     
-    private static ArrayList<BigInteger> factor (BigInteger b) {
-    if (b.toString().length() > 22) {
-        return Ecm.factor(b);
-    }else {
-    System.out.println("factoring:"+b);
-        return PollardRho.factor(b);        
-    }
-        
-
-    }    
-  
     
 
 }
