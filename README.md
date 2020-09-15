@@ -21,6 +21,53 @@ BigMathFast.inverseEulerTotient(BigInteger b)
 
 BigMathFast.eulerTotient(BigInteger b)
 
+## Maven
+
+Add these two blocks to you .m2/settings.xml
+
+```
+profiles>
+    <profile>
+      <id>github</id>
+      <repositories>
+        <repository>
+          <id>central</id>
+          <url>https://repo1.maven.org/maven2</url>
+          <releases><enabled>true</enabled></releases>
+          <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+        <repository>
+          <id>github</id>
+          <name>GitHub OWNER Apache Maven Packages</name>
+          <url>https://maven.pkg.github.com/thomasegense/bigmathfast</url>
+        </repository>
+      </repositories>
+    </profile>
+  </profiles>
+```
+
+```
+<server>
+    <id>github</id>
+    <username>username</username>
+    <password>password or token</password>
+  </server>
+```
+
+## Binary release
+Download the stand alone jar:
+
+https://github.com/thomasegense/bigmathfast/releases/download/v1.0/bigmathfast-1.0-jar-with-dependencies.jar
+
+Main method to try the factorization:
+
+```
+java -cp bigmathfast-1.0-jar-with-dependencies.jar dk.teg.bigmathfast.BigMathFast 5519446392203102380014492878452138579184343772913786312128
+```
+
+
+
+
 
 ## Factorization benchmark for worst case numbers (*)
 
