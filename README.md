@@ -6,7 +6,14 @@ algorithms know. See benchmark tests below.
 ## Factorization
 For numbers less than 22 digits the PollardRho algoritm is used. For numbers larger than 22 digits the algorithm will use ECM/Siqs.
 
-It is the same algorithm decribed here and by same auhor: https://www.alpertron.com.ar/ECM.HTM
+The ECM/Siqs implementation is the same algorithm decribed here and by same auhor: https://www.alpertron.com.ar/ECM.HTM
+ 
+Factorization time depends on the size of the second largest primefactor. If the second largest primefactor has over 45 digits the factorization
+can take many days. 
+See the benchmark tests below.
+
+
+
 
 Usage:
 
@@ -80,8 +87,6 @@ java -cp bigmathfast-1.0-jar-with-dependencies.jar dk.teg.bigmathfast.BigMathFas
 | 70                |  25 sec       |  21 minutes          |
 | 80                |  6 min 30 sec  |  12 hour 30 minutes  |
 | 90                |  1 hour 16 minutes    |   6 days 16 hours             |
-| 100               |  ???         |      ???             |
-
 
 (*) Numbers from benchmark table:
 
