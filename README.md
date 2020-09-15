@@ -6,20 +6,74 @@ algorithms know. See benchmark tests below.
 ## Factorization
 For numbers less than 22 digits the PollardRho algoritm is used. For numbers larger than 22 digits the algorithm will use ECM/Siqs.
 
-It is the same algorithm decribed here and by same auhor: https://www.alpertron.com.ar/ECM.HTM
+The ECM/Siqs implementation is the same algorithm decribed here and by same auhor: https://www.alpertron.com.ar/ECM.HTM
+ 
+Factorization time depends on the size of the second largest primefactor. If the second largest primefactor has over 45 digits the factorization
+can take many days. 
+See the benchmark tests below.
+
+
+
 
 Usage:
 
 BigMathFast.factorize(BigInteger b)
 
 ## Euler Totient (phi) and inverse Euler Totient (invphi)
-The inverse euler totient uses the algorithm described by HansRaj Gupta: https://insa.nic.in/writereaddata/UpLoadedFiles/IJPAM/20005a81_22.pdf
+The inverse euler totient uses the algorithm described by Hansraj Gupta: https://insa.nic.in/writereaddata/UpLoadedFiles/IJPAM/20005a81_22.pdf
 
 Usage:
 
 BigMathFast.inverseEulerTotient(BigInteger b)
 
 BigMathFast.eulerTotient(BigInteger b)
+
+## Maven
+
+Add these two blocks to you .m2/settings.xml
+
+```
+profiles>
+    <profile>
+      <id>github</id>
+      <repositories>
+        <repository>
+          <id>central</id>
+          <url>https://repo1.maven.org/maven2</url>
+          <releases><enabled>true</enabled></releases>
+          <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+        <repository>
+          <id>github</id>
+          <name>GitHub OWNER Apache Maven Packages</name>
+          <url>https://maven.pkg.github.com/thomasegense/bigmathfast</url>
+        </repository>
+      </repositories>
+    </profile>
+  </profiles>
+```
+
+```
+<server>
+    <id>github</id>
+    <username>username</username>
+    <password>password or token</password>
+  </server>
+```
+
+## Binary release
+Download the stand alone jar:
+
+https://github.com/thomasegense/bigmathfast/releases/download/v1.0/bigmathfast-1.0-jar-with-dependencies.jar
+
+Main method to try the factorization:
+
+```
+java -cp bigmathfast-1.0-jar-with-dependencies.jar dk.teg.bigmathfast.BigMathFast 5519446392203102380014492878452138579184343772913786312128
+```
+
+
+
 
 
 ## Factorization benchmark for worst case numbers (*)
@@ -33,8 +87,6 @@ BigMathFast.eulerTotient(BigInteger b)
 | 70                |  25 sec       |  21 minutes          |
 | 80                |  6 min 30 sec  |  12 hour 30 minutes  |
 | 90                |  1 hour 16 minutes    |   6 days 16 hours             |
-| 100               |  ???         |      ???             |
-
 
 (*) Numbers from benchmark table:
 
