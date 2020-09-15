@@ -1,5 +1,5 @@
 # bigmathfast
-Java implementation of mathematical functions for large numbers. The implementation uses some of the fast
+Java implementation of mathematical functions for large numbers. The implementation uses some of the fastests
 algorithms know. See benchmark tests below.
 
 
