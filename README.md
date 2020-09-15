@@ -13,7 +13,7 @@ Usage:
 BigMathFast.factorize(BigInteger b)
 
 ## Euler Totient (phi) and inverse Euler Totient (invphi)
-The inverse euler totient uses the algorithm described by HansRaj Gupta: https://insa.nic.in/writereaddata/UpLoadedFiles/IJPAM/20005a81_22.pdf
+The inverse euler totient uses the algorithm described by Hansraj Gupta: https://insa.nic.in/writereaddata/UpLoadedFiles/IJPAM/20005a81_22.pdf
 
 Usage:
 
