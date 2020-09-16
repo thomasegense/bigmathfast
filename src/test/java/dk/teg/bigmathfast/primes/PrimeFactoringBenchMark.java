@@ -19,12 +19,12 @@ public class PrimeFactoringBenchMark {
         long timeRho=0;
         long timeEcm=0;
         for (int i =1 ;i<10000;i++) {                     
-            String number = generateNumber(70);
+            String number = generateNumber(40);
             
             //number="90105590165517928753889708611168689116043190507997";
             System.out.println(number);
             long start = System.currentTimeMillis();
-            ArrayList<BigInteger> factorRho = Ecm.factor(new BigInteger(number));
+            ArrayList<BigInteger> factorRho = PollardRho.factor(new BigInteger(number));
             timeRho += (System.currentTimeMillis()-start);
                                 
             
