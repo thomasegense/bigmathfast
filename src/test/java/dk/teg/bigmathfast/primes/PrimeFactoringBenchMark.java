@@ -41,6 +41,21 @@ public class PrimeFactoringBenchMark {
         }       
     }
 
+    /*
+    @Test
+    void testDeadlock() {
+         //Before test set: int numberThreads = 4;
+         //in the ECM.java class.      
+        //After a few loops there will be a deadlock
+        for (int i =1 ;i<100;i++) {                     
+            String number = "40204407726806272821275765815528323547646475263864";            
+            System.out.println("Factoring:"+number);           
+            ArrayList<BigInteger> factors = Ecm.factor(new BigInteger(number));
+            System.out.println("Factors:"+factors);        
+        }       
+    }
+    */
+    
  private static String generateNumber(int digits) {
      StringBuffer b = new StringBuffer();
      for (int i=0;i<digits;i++) {
