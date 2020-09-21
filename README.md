@@ -30,7 +30,7 @@ BigMathFast.eulerTotient(BigInteger b)
 
 ## Maven
 
-Add these two blocks to you .m2/settings.xml
+Add these two blocks to your .m2/settings.xml
 
 ```
 profiles>
