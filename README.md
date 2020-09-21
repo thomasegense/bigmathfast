@@ -78,15 +78,15 @@ java -cp bigmathfast-1.0-jar-with-dependencies.jar dk.teg.bigmathfast.BigMathFas
 
 ## Factorization benchmark for worst case numbers (*)
 
-| Number of digits  | bigmathfast(ECM) | Math Wolfram      |      PARI             |
-| ------------------| ------------- |----------------------|----------------------|
-| 30                |  80 millis     |                      |                     |
-| 40                |  290 millis    |                      |                     |
-| 50                |  1.2 sec      |                       |                     |
-| 60                |  4,7 sec      |                       |    10.6 sec                 | 
-| 70                |  25 sec       |  21 minutes           | 55 sec              | 
-| 80                |  6 min 30 sec  |  12 hour 30 minutes  |  16 minutes         |
-| 90                |  1 hour 16 minutes    |   6 days 16 hours|                  |
+| Number of digits  | bigmathfast(ECM) | Math Wolfram      |      PARI           |
+| ------------------| ------------- |----------------------|---------------------|
+| 30                |  80 millis    |                      |                     |
+| 40                |  290 millis   |                      |                     |
+| 50                |  1.2 sec      |                      |                     |
+| 60                |  4,7 sec      |                      |    10.6 sec         | 
+| 70                |  25 sec       |  21 minutes          | 55 sec              | 
+| 80                |  6 minuntes 30 sec  |  12 hour 30 minutes  |  16 minutes   |
+| 90                |  1 hours 16 minutes    |   6 days 16 hours| 3  hours 37 minutes  |
 
 (*) Numbers from benchmark table:
 
