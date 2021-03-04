@@ -29,7 +29,9 @@ BigMathFast.inverseEulerTotient(BigInteger b)
 BigMathFast.eulerTotient(BigInteger b)
 
 ## Rationalize - approximate a BigDecimal with a fraction.
-Precision up to 10000 digits. Can take maximum denominator or maximumNumber of digits in denominator as input.
+Finds the best rational approximation to a BigDecimal.
+Precision up to 10000 digits. Can take maximum denominator value or maximum number of digits in denominator as input.
+
 BigMathFast.PI constant has the first 5400 digits of PI
 
 Usage:       
