@@ -151,7 +151,7 @@ public class BigMathFast {
      *  
      */        
     public static BigRational rationalApproxmination(BigDecimal bigDecimal, int maximumDigitsInDemominator) {        
-        return FareyRationalApproxmation.fareyApproxWithMaxDenom(bigDecimal, maxDenominaterDigits);       
+        return FareyRationalApproxmation.fareyApproxWithMaxDenom(bigDecimal, maximumDigitsInDemominator);       
     }
     
 }
