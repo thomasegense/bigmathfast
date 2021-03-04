@@ -1,12 +1,16 @@
 package dk.teg.bigmathfast;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import ar.alpertron.ecm.Ecm;
 import dk.teg.bigmathfast.euler.EulerTotient;
+import dk.teg.bigmathfast.fareyapproximation.BigRational;
+import dk.teg.bigmathfast.fareyapproximation.FareyRationalApproxmation;
 import dk.teg.bigmathfast.primes.PollardRho;
 
 public class BigMathFast {
@@ -114,4 +118,40 @@ public class BigMathFast {
         return EulerTotient.inverseEulerTotient(b);
     }
         
+    
+    /**
+     * Gives the best rational approximation to a decimal number with a give maximum number of
+     * digits in the denominator.  
+     * The algoritm use the Farey sequence and the Stern Brocot tree- 
+     *     
+     * @See https://en.wikipedia.org/wiki/Farey_sequence 
+     * @see https://handwiki.org/wiki/Stern%E2%80%93Brocot_tree    
+     *      
+     * @param bigDecimal The number to approximate 
+     * @param maxDenominaterDigits maximum denominator. Maximum value is 10E100000 (100000 digits)
+     * @return BigRational - a wrapper class for two BigIntegers with nominator and denominator  
+     *  
+     */        
+    public static BigRational rationalApproxmination(BigDecimal bigDecimal, BigInteger maxDenominaterValue) {        
+        return FareyRationalApproxmation.fareyApproxWithMaxDenom(bigDecimal, maxDenominaterValue);
+        
+    }
+    
+    /**
+     * Gives the best rational approximation to a decimal number with a give maximum number of
+     * digits in the denominator.  
+     * The algoritm use the Farey sequence and the Stern Brocot tree- 
+     *     
+     * @See https://en.wikipedia.org/wiki/Farey_sequence 
+     * @see https://handwiki.org/wiki/Stern%E2%80%93Brocot_tree    
+     *      
+     * @param bigDecimal The number to approximate 
+     * @param maxDenominaterDigits Maximum number of digits in denominator. Max value is 10000
+     * @return BigRational - a wrapper class for two BigIntegers with nominator and denominator  
+     *  
+     */        
+    public static BigRational rationalApproxmination(BigDecimal bigDecimal, int maximumDigitsInDemominator) {        
+        return FareyRationalApproxmation.fareyApproxWithMaxDenom(bigDecimal, maxDenominaterDigits);       
+    }
+    
 }
