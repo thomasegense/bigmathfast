@@ -28,6 +28,20 @@ BigMathFast.inverseEulerTotient(BigInteger b)
 
 BigMathFast.eulerTotient(BigInteger b)
 
+## Rationalize - approximate a BigDecimal with a fraction.
+Precision up to 10000 digits. Can take maximum denominator or maximumNumber of digits in denominator as input.
+BigMathFast.PI constant has the first 5400 digits of PI
+
+Usage:       
+             
+FareyRationalApproxmation.fareyApproxWithMaxDenom(BigMathFast.PI, new BigInteger("999")); 
+Will return  355/113
+
+FareyRationalApproxmation.fareyApproxWithMaxDenom(BigMathFast.PI, 5);  //Maximum denominator will be 99999
+Will return 312689/99532:                 
+     
+          
+
 ## Maven
 
 Add these two blocks to your .m2/settings.xml
