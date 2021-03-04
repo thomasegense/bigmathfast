@@ -35,10 +35,12 @@ BigMathFast.PI constant has the first 5400 digits of PI
 Usage:       
              
 FareyRationalApproxmation.fareyApproxWithMaxDenom(BigMathFast.PI, new BigInteger("999")); 
+
 Will return  355/113
 
 FareyRationalApproxmation.fareyApproxWithMaxDenom(BigMathFast.PI, 5);  //Maximum denominator will be 99999
-Will return 312689/99532:                 
+
+Will return 312689/99532
      
           
 
