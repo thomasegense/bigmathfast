@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
@@ -16,8 +17,7 @@ public class InverseElementInZNTest {
 	private static BigInteger B2 = new BigInteger("2");
 	
     @Test
-    
-    void testPrimeWithMultiplicityForPrime2() {
+    void testPrimeTwoWithMultiplicity() {
         	
     	// Prime=2 has special solutions.
     	//For multiplicity 1 they collapse to 1 solution: 1
@@ -65,7 +65,61 @@ public class InverseElementInZNTest {
    	    multiplicity =256;    	
    	    ArrayList<BigInteger> rootsForLargeNumber = InverseElementInZN.findRootsOfUnityForPrimeWithMultiplicity(prime, multiplicity);    	       
    	    assertEquals(4,  rootsForLargeNumber.size());   	    
+    	//This time test they are solutions for x^2=1 mod (p^n)
+   	    BigInteger largeNumber=B2.pow(multiplicity);
+   	    
+   	    for (BigInteger root : rootsForLargeNumber) {
+   	    	//assertEquals(B1, (root.multiply(root)).mod(largeNumber)); Faster with method below   	    	 
+   	    	assertEquals(B1, root.modPow(B2, largeNumber));	
+   	    }
+   	    
+    }
+    
+    @Test
+    void testOddPrimeWithMultiplicity() {
+      //for n =p^x , the only solultions are 1 and (p^x)-1
+    	
+    	BigInteger prime = new BigInteger("3");
+    	int multiplicity =1;    	
+    	ArrayList<BigInteger> rootsFor3 = InverseElementInZN.findRootsOfUnityForPrimeWithMultiplicity(prime, multiplicity);
+    	assertEquals(2,  rootsFor3.size());
+    	assertTrue(rootsFor3.contains(B1));
+        assertTrue(rootsFor3.contains(B2));
+    	
+    	
+        prime = new BigInteger("37");
+    	multiplicity =1;    	
+    	ArrayList<BigInteger> rootsFor37 = InverseElementInZN.findRootsOfUnityForPrimeWithMultiplicity(prime, multiplicity);
+    	assertEquals(2,  rootsFor37.size());
+    	assertTrue(rootsFor37.contains(B1));
+        assertTrue(rootsFor37.contains(new BigInteger("36")));
+        
+        //Go large
+        multiplicity =6;    	
+        BigInteger largePrime = BigInteger.probablePrime(250, new Random());
+        ArrayList<BigInteger> rootsForLarge = InverseElementInZN.findRootsOfUnityForPrimeWithMultiplicity(largePrime, multiplicity); 
+    	assertEquals(2,  rootsForLarge.size());
+    	assertTrue(rootsForLarge.contains(B1));
+        
+    	//Tests both solutions        	
+    	BigInteger largeNumber=largePrime.pow(multiplicity);
+    	for (BigInteger root : rootsForLarge) {
+    	    	//assertEquals(B1, (root.multiply(root)).mod(largeNumber)); Faster with method below   	    	 
+    	    	assertEquals(B1, root.modPow(B2, largeNumber));	
+    	    }
+	    }
+        
+        
+
+   
+    @Test
+    void testTwoPrimes() {
+    	
+   // 	InverseElementInZN.findRootsOfUnityForPrimeWithMultiplicity(prime, multiplicity);
+    	
     	
     }
+    
+    
 }
 

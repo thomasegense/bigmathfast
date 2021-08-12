@@ -143,7 +143,7 @@ public class InverseElementInZN {
 
     }
 
-    //expand so not only finding x^2=1
+    //expand so not only finding x^2=1 but also x^2=b
     public static ArrayList<BigInteger> findRootsOfUnity(BigInteger p1, BigInteger p2) {
 
         BigInteger n = p1.multiply(p2);
@@ -176,7 +176,7 @@ public class InverseElementInZN {
     }
 
     
-    /*
+    /* TODO write solutions (see unittest)
      * It is up to the called to check the number is prime.
      * 
      * This is the basic component for the other roots method for combined numbers.  
