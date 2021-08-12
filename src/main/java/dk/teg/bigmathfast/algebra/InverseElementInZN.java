@@ -23,6 +23,13 @@ public class InverseElementInZN {
     //(6k + 1)(12k + 1)(18k + 1) is Carmichael number if all 3 factors prime
     public static void main(String[] args) {
 
+    	  BigInteger p = B3;
+          BigInteger q = B5;
+
+          BigInteger vals[] = EuclideanAlgorithm.gcdExtendedEuclid(q, p);
+          System.out.println("gcd(" + q + ", " + p + ") = " + vals[0]);
+          System.out.println(vals[1] + "(" + q + ") + " + vals[2] + "(" + p + ") = " + vals[0]);
+    	
         /*
         int prime = 11;
         int multiplicity =6;
@@ -77,10 +84,8 @@ public class InverseElementInZN {
 
         System.out.println(inverseElementInZn(new BigInteger("199"), new BigInteger("61")));
         System.exit(1);
-        BigInteger p = B3;
-        BigInteger q = B5;
+  
 
-        BigInteger vals[] = EuclideanAlgorithm.gcdExtendedEuclid(q, p);
         System.out.println("gcd(" + p + ", " + q + ") = " + vals[0]);
         System.out.println(vals[1] + "(" + p + ") + " + vals[2] + "(" + q + ") = " + vals[0]);
 
@@ -106,17 +111,6 @@ public class InverseElementInZN {
 
     }
 
-    //return array [d, a, b] such that d = gcd(p, q), ap + bq = d
-    static int[] gcdExtendedEuclidInt(int p, int q) {
-        if (q == 0)
-            return new int[] { p, 1, 0 };
-
-        int[] vals = gcdExtendedEuclidInt(q, p % q);
-        int d = vals[0];
-        int a = vals[2];
-        int b = vals[1] - (p / q) * vals[2];
-        return new int[] { d, a, b };
-    }
 
     public static void findCarmichaelNumber(BigInteger base) {
 
@@ -183,8 +177,9 @@ public class InverseElementInZN {
 
     
     /*
-     * It is up to the called to check the number is prime
-     * Tested, working! 
+     * It is up to the called to check the number is prime.
+     * 
+     * This is the basic component for the other roots method for combined numbers.  
      */
     public static ArrayList<BigInteger> findRootsOfUnityForPrimeWithMultiplicity(BigInteger prime, int multiplicity) {
         ArrayList<BigInteger> roots= new ArrayList<BigInteger>();

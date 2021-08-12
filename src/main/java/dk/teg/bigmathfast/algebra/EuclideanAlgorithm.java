@@ -8,10 +8,14 @@ public class EuclideanAlgorithm {
 	   public static BigInteger B1 = new BigInteger("1");
 	
     /* Find greatest common divisor of two numbers.
-     * Extress the gcd as a linear combination of the two numbers using Euclidean Algorithm.  
+     * Express the gcd as a linear combination of the two numbers using Euclidean Algorithm.  
      *      
      * return array [d, a, b] such that d = gcd(p, q), ap + bq = d
-     * 
+     *
+     * Example: p=5, q=3 , return value is{ 1, 2, -1} 
+     *  gcd(3, 5) = 1
+     *  gcd(3, 5) = 1 =  2(3) + -1(5)
+     *
      * For numbers over 4000 digits each, it can be required to increase MaxJavaStackTraceDepth in the JVM
      */
     

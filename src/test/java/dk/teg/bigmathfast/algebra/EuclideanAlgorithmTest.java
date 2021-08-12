@@ -12,6 +12,15 @@ public class EuclideanAlgorithmTest {
 
 	private static BigInteger B0 = new BigInteger("0");
     
+	 
+    @Test
+    void testExtendedEuclid1() {
+    	 BigInteger[] gcdComb = EuclideanAlgorithm.gcdExtendedEuclid(new BigInteger("3"), new BigInteger("5"));	
+    	System.out.println(gcdComb[0]);
+    	System.out.println(gcdComb[1]);
+    	System.out.println(gcdComb[2]);
+    }
+	
     @Test
     void testExtendedEuclid() {
      try {
