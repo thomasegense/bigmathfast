@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 
-import squares.NumberExpressedInSumOfSquares;
+
 
 
 public class SquareUtil {
@@ -67,6 +67,35 @@ public class SquareUtil {
 
         return list;
     } 
+
+ // mersenne prime forum - BigInteger
+ 	public static BigInteger bigintroot(BigInteger n) {
+ 		int currBit = n.bitLength() / 2;
+
+ 		BigInteger remainder = n;
+ 		BigInteger currSquared = BigInteger.ZERO.setBit(2*currBit);
+
+ 		BigInteger temp = BigInteger.ZERO;
+ 		BigInteger toReturn = BigInteger.ZERO;
+
+ 		BigInteger potentialIncrement;
+ 		do {
+ 			temp = toReturn.setBit(currBit);
+ 			potentialIncrement = currSquared.add(toReturn.shiftLeft(currBit+1));
+
+ 			int cmp = potentialIncrement.compareTo(remainder);
+ 			if (cmp < 0) {
+ 				toReturn = temp;
+ 				remainder = remainder.subtract(potentialIncrement);
+ 			}
+ 			else if (cmp == 0) {
+ 				return temp;
+ 			}
+ 			currBit--;
+ 			currSquared = currSquared.shiftRight(2);
+ 		} while (currBit >= 0);
+ 		return toReturn;
+ 	}
 
     
 }

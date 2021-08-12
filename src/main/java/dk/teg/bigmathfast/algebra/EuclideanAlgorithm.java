@@ -4,10 +4,15 @@ import java.math.BigInteger;
 
 public class EuclideanAlgorithm {
 
+	   public static BigInteger B0 = new BigInteger("0");
+	   public static BigInteger B1 = new BigInteger("1");
+	
     /* Find greatest common divisor of two numbers.
      * Extress the gcd as a linear combination of the two numbers using Euclidean Algorithm.  
      *      
      * return array [d, a, b] such that d = gcd(p, q), ap + bq = d
+     * 
+     * For numbers over 4000 digits each, it can be required to increase MaxJavaStackTraceDepth in the JVM
      */
     
     public static BigInteger[] gcdExtendedEuclid(BigInteger p, BigInteger q) {

@@ -265,7 +265,7 @@ public class InverseElementInZN {
      */
     public static BigInteger inverseElementInZn(BigInteger n, BigInteger element) {
 
-        BigInteger[] vals = gcdExtendedEuclid(n, element);
+        BigInteger[] vals = EuclideanAlgorithm.gcdExtendedEuclid(n, element);
         //TODO check q is one
         if (vals[2].compareTo(B0) < 0) {
             return vals[2].add(n);
