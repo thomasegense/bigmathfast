@@ -10,12 +10,8 @@ import ar.alpertron.ecm.Ecm;
 public class DeadlockTest {
 
     public static void main(String[] args) {
-       
-             
-        
-    //Before test set: int numberThreads = 4;
-         //in the ECM.java class.      
-        //After a few loops there will be a deadlock
+   
+        //After a few loops there will be a deadlock for the 60 digits
         for (int i =1 ;i<10000;i++) {          
           long start = System.currentTimeMillis();           
                         
