@@ -23,22 +23,28 @@ public class BigMathFast {
     /*
      * Just an example to run the factorization from a command line.
      * Example :
-     *  java -cp bigmathfast-1.0-jar-with-dependencies.jar dk.teg.bigmathfast.BigMathFast 93035149443954345347665179408833277091909532522394543659489519897196854705698057
+     *  java -cp bigmathfast-1.0-jar-with-dependencies.jar dk.teg.bigmathfast.BigMathFast 93035149443954345347665179408833277091909532522394543659489519897196854705698057 
      *  This 70 digits will be factorized in 25 seconds. This is worst case for a 70 digits number. 
      * 
      */
     public static void main(String[] args) {
 
-        if (args.length != 1) {
-            System.out.println("Must time a number as input (1 value only)");
+        if (!(args.length == 1 || args.length == 2)) {
+            System.out.println("Input is {numberToFactor} {numberThreads (optional, default 1)}");
             System.exit(1);                               
         }
         
-        //System.out.println(factorize(11111111111111L));
-        
+        int threads=1;
+
+       
         BigInteger b= new BigInteger(args[0]);
+        if (args.length ==2){
+          threads=Integer.parseInt(args[1]) ;
+        }
+        
         long start = System.currentTimeMillis();
-        ArrayList<BigInteger> factors = Ecm.factor(b);
+        System.out.println("Starting factorization of "+ b +" with #threads="+threads);
+        ArrayList<BigInteger> factors = Ecm.factor(b,threads);
         System.out.println("Factorization time in millis:"+(System.currentTimeMillis()-start));
         System.out.println(factors);          
     }

@@ -16,6 +16,7 @@ package ar.alpertron.ecm;
 import java.math.*;
 import java.sql.BatchUpdateException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 
@@ -479,10 +480,22 @@ public class Ecm  implements Runnable, FactorApplet
   
     
   
-  public static ArrayList<BigInteger> factor(BigInteger b)
+  
+  
+    //1 THREAD  
+    public static ArrayList<BigInteger> factor(BigInteger b){
+   return factor(b,1);  
+   }
+  
+  
+  
+  
+  
+  public static ArrayList<BigInteger> factor(BigInteger b, int threads)
   {      
       
       final Ecm ecm1 = new Ecm();
+      ecm1.numberThreads=threads;
       ecm1.StartFactorExprBatch(b.toString(), 0);      
       ArrayList<BigInteger> factors = new ArrayList<BigInteger>();
       
@@ -516,7 +529,7 @@ public class Ecm  implements Runnable, FactorApplet
     final BigInteger[] Primes,
     final int[] Exponents)
   {
-    
+   this.NumberToFactor=NbrToFactor; 
    
     startNewFactorization(true);       // Request complete factorization
     System.arraycopy(PD, 0, Primes, 0, NbrFactors);
