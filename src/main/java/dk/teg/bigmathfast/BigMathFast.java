@@ -63,7 +63,7 @@ public class BigMathFast {
      * many days for factorize.   
      *    
      * @see https://en.wikipedia.org/wiki/Pollard%27s_rho_algorithm
-)    * @see https://www.alpertron.com.ar/ECM.HTM
+     * @see https://www.alpertron.com.ar/ECM.HTM
      *   
      * @param b The BigInteger to be factorized
      * @return ArrayList<BigInteger> with the prime factors in sorted order. 
@@ -77,6 +77,36 @@ public class BigMathFast {
           return Ecm.factor(b);                
         }       
     }
+       
+          /**
+     * This method will factorize an integer into prime factors. 
+     * 
+     * 
+     * If the number has less than 22 digits, the Pollardh algorithm will be used.
+     * If the number has 22 digits or more, the ECM/Siqs  algorithm will be used.
+     * 
+     * A number with 70 digits will be factorized in 30 seconds in worst case.
+     * The complexity dependens on the second largest prime factor.
+     * If the second largest prime factor is larger than 45 digits, it can take
+     * many days for factorize.   
+     *    
+     * @see https://en.wikipedia.org/wiki/Pollard%27s_rho_algorithm
+     * @see https://www.alpertron.com.ar/ECM.HTM
+     *   
+     * @param b The BigInteger to be factorized
+     * @param threads number of threads.
+     * @return ArrayList<BigInteger> with the prime factors in sorted order. 
+     *  
+     */
+        public static ArrayList<BigInteger> factorize(BigInteger b, int threads){        
+        if (b.toString().length() <22) {
+            return PollardRho.factor(b); 
+        }
+        else {
+          return Ecm.factor(b, threads);                
+        }       
+    }
+       
        
     
     /**
