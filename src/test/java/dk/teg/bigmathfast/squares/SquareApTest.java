@@ -129,10 +129,27 @@ And this happens for the 3 AP (where without the power 2 notation)
               
                BigInteger difCalculated = it.next().add(it.next().subtract(it.next()));
                difCalculated=difCalculated.abs(); //is negative
-               assertEquals(new BigInteger("264"),difCalculated);
-              
-        
+               assertEquals(new BigInteger("264"),difCalculated);                      
     }
-                
+ 
+    
+    @Test
+    void  testLargeNumber() {
+          
+        //All prime factors == 1 mod 4
+        //This number has an exceptional low difference for its size.
+        BigInteger number = new BigInteger("19742462232025");
+        
+        ArrayList<BigInteger> factors = BigMathFast.factorize(number);
+        System.out.println(factors);
+        factors.addAll(factors);
+        
+        ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.createAllNumberExpressedInSumOfSquares(factors);
+        
+        Minimum3Tuppel3SquaresInAPBigNumber best3MatchAps = SquareUtil.findBestMatchOfAddingTwoComparedToThirdBisectionFromAps(apSquares);
+        assertEquals(new BigInteger("32509509696"), best3MatchAps.getDifference());
+    }
+     
+    
 }
 
