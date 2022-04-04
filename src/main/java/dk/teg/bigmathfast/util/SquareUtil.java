@@ -40,7 +40,7 @@ public class SquareUtil {
             numberOfExpressions=  new ArrayList<NumberExpressedInSumOfSquares>();
             Iterator<NumberExpressedInSumOfSquares>  it=temp.iterator();
 
-            while (it.hasNext()){
+            while (it.hasNext()){                           
                 numberOfExpressions.add(it.next());  
             }                                                                                        
         }      
@@ -102,7 +102,7 @@ public class SquareUtil {
  		return toReturn;
  	}
 
- 	public static BigInteger findBestMatchOfAddingTwoComparedToThirdBisectionFromAps(ArrayList<NumberExpressedInSumOfSquares> aps){
+ 	public static Minimum3Tuppel3SquaresInAPBigNumber findBestMatchOfAddingTwoComparedToThirdBisectionFromAps(ArrayList<NumberExpressedInSumOfSquares> aps){
  	    
  	    ArrayList<BigInteger> list = new         ArrayList<BigInteger>();
 
@@ -111,21 +111,52 @@ public class SquareUtil {
  	        if (!aps.get(i).getAPBigNumber().getDifference().equals(B0)){ list.add(aps.get(i).getAPBigNumber().getDifference());}
  	    }
  	    
- 	    return findBestMatchOfAddingTwoComparedToThirdBisection(list);      
+ 	    
+ 	    
+ 	    
+ 	    
+ 	   ArrayList<BigInteger> results = findBestMatchOfAddingTwoComparedToThirdBisection(list);      
+ 	   //Now match the difference to the difference in AP. (not optimal) 	       
+ 	    
+ 	   BigInteger bestMatch=results.remove(3); //Difference, not from an AP
+ 	   ArrayList<Tuppel3SquaresInAPBigNumber > bestAps = new ArrayList<Tuppel3SquaresInAPBigNumber >();  
+ 	   
+ 	   for (NumberExpressedInSumOfSquares ap : aps) {
+ 	      Tuppel3SquaresInAPBigNumber tuppelAP = ap.getAPBigNumber(); 
+ 	      
+ 	       if (results.contains(tuppelAP.difference)) {
+ 	           bestAps.add(tuppelAP); 	           
+ 	       }
+ 	       if (bestAps.size() == 3) { 	           	           
+ 	           return new Minimum3Tuppel3SquaresInAPBigNumber(bestAps,bestMatch); 	            	           
+ 	       } 	       
+ 	   } 	   
+ 	   throw new RuntimeException("Logic error!");
+ 	   
  	}
  	
 
-    public static BigInteger findBestMatchOfAddingTwoComparedToThirdBisection(ArrayList<BigInteger> numbers){
+    public static ArrayList<BigInteger> findBestMatchOfAddingTwoComparedToThirdBisection(ArrayList<BigInteger> numbers){
     //System.out.println("findBestMatchOfAddingTwoComparedToThirdBisection start");
+        
+        ArrayList<BigInteger> result = new  ArrayList<BigInteger> ();
         Collections.sort(numbers);
         //                                System.out.println(numbers);
 
         //int numberOfIterations=0;
         BigInteger bestMatch=new BigInteger("9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999");
+        BigInteger bestSumOfTwoPart1=null;
+        BigInteger bestSumOfTwoPart2=null;
+        BigInteger bestSumMiddle=null;
+        
         for (int i=0;i<numbers.size()-2;i++){
             for (int j=i+1;j<numbers.size()-1;j++){
-                BigInteger sumOfTwo= numbers.get(i).add(numbers.get(j));
+                
+                BigInteger sumOfTwoPart1= numbers.get(i);
+                BigInteger sumOfTwoPart2= numbers.get(j);
+                BigInteger sumOfTwo=sumOfTwoPart1.add(sumOfTwoPart2); 
 
+                
                 int minIndex=j+1;
                 int maxIndex=numbers.size();
                 int currentIndexJump= (maxIndex-minIndex)/2;
@@ -144,9 +175,13 @@ public class SquareUtil {
 
                 if (j==i+1){ //Two cosequtive numbers on list
                     BigInteger differenceLast=sumOfTwo.subtract(numbers.get(maxIndex-1));
+                    
                     BigInteger differenceLastAbs= differenceLast.abs();
                     if (differenceLastAbs.compareTo(bestMatch)<0){
                         bestMatch =differenceLastAbs; //Do not forget this match
+                        bestSumMiddle = numbers.get(maxIndex-1);
+                        bestSumOfTwoPart1=sumOfTwoPart1;
+                        bestSumOfTwoPart2=sumOfTwoPart2;
                     }
 
                     if (differenceLast.compareTo(BigInteger.ZERO)>0){
@@ -154,7 +189,13 @@ public class SquareUtil {
                         //System.out.println("breaking! sumOfTwo:"+sumOfTwo+", last:"+numbers.get(maxIndex));
                         //  break;
                     //    System.out.println("findBestMatchOfAddingTwoComparedToThirdBisection end2");
-                        return bestMatch;
+             
+                        result.add(bestSumMiddle);
+                        result.add(bestSumOfTwoPart1);
+                        result.add(bestSumOfTwoPart2);
+                        result.add(bestMatch);
+                        
+                        return result;
                     }
                 }
 
@@ -189,6 +230,9 @@ public class SquareUtil {
                     differenceAbs= difference.abs();
                     if (differenceAbs.compareTo(bestMatch)<0){
                         bestMatch =differenceAbs;
+                        bestSumMiddle = numbers.get(currentIndex-1);                        
+                        bestSumOfTwoPart1=sumOfTwoPart1;
+                        bestSumOfTwoPart2=sumOfTwoPart2;
                     }
                 }
 
@@ -196,7 +240,10 @@ public class SquareUtil {
                 difference=sumOfTwo.subtract(numbers.get(currentIndex));
                 differenceAbs= difference.abs();
                 if (differenceAbs.compareTo(bestMatch)<0){                                        
+                    bestSumMiddle = numbers.get(currentIndex);
                     bestMatch =differenceAbs;
+                    bestSumOfTwoPart1=sumOfTwoPart1;
+                    bestSumOfTwoPart2=sumOfTwoPart2;
                 }
 
 
@@ -204,14 +251,22 @@ public class SquareUtil {
                     //                        System.out.println("final bisection index against:"+numbers.get(currentIndex+1));
                     difference=sumOfTwo.subtract(numbers.get(currentIndex+1));
                     differenceAbs= difference.abs();
-                    if (differenceAbs.compareTo(bestMatch)<0){
+                    if (differenceAbs.compareTo(bestMatch)<0){                        
                         bestMatch =differenceAbs;
+                        bestSumMiddle = numbers.get(currentIndex+1);
+                        bestSumOfTwoPart1=sumOfTwoPart1;
+                        bestSumOfTwoPart2=sumOfTwoPart2;
                     }
                 }
             }
         }
     //  System.out.println("findBestMatchOfAddingTwoComparedToThirdBisection end1");
-        return bestMatch;
+        result.add(bestSumMiddle);
+        result.add(bestSumOfTwoPart1);
+        result.add(bestSumOfTwoPart2);
+        result.add(bestMatch);
+        
+        return result;
     } 
 
     

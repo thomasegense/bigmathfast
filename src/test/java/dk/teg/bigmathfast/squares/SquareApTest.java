@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import dk.teg.bigmathfast.BigMathFast;
+import dk.teg.bigmathfast.util.Minimum3Tuppel3SquaresInAPBigNumber;
 import dk.teg.bigmathfast.util.NumberExpressedInSumOfSquares;
 import dk.teg.bigmathfast.util.SquareUtil;
 import dk.teg.bigmathfast.util.Tuppel3SquaresInAPBigNumber;
@@ -14,6 +15,8 @@ import dk.teg.bigmathfast.util.Tuppel3SquaresInAPBigNumber;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.TreeSet;
 
 
 
@@ -55,11 +58,18 @@ Prime factors:[5, 13, 17]
 (923^2 , 1105^2 , 1261^2) with step value:369096
 (533^2 , 1105^2 , 1469^2) with step value:936936
 (595^2 , 1105^2 , 1445^2) with step value:867000
-              
-              
-264 is best difference              
-              
-              
+
+//And 14 with the trivial (1105^2 , 1105^2 , 1105^2) with step value:0.  
+
+
+Next find the 3 AP such that difference added of 2 of them is as close to another difference
+264 is best difference 
+And this happens for the 3 AP (where without the power 2 notation)
+(391,1105,1513:1068144)
+(1057,1105,1151:103776)
+(221,1105,1547:1172184)
+1172184 - (1068144+103776) = 264
+                                          
  */
 
         
@@ -92,10 +102,13 @@ Prime factors:[5, 13, 17]
         //Transform into AP with middle number 1105*1105
                 
         ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.createAllNumberExpressedInSumOfSquares(factors);
+                
+        assertEquals(14,apSquares.size());
         
          // Test the AP of squares about.
          for (NumberExpressedInSumOfSquares apSquare :apSquares) {                                
              Tuppel3SquaresInAPBigNumber ap = apSquare.getAPBigNumber();
+///       System.out.println(ap);
              
              BigInteger lowDiff = ap.getMiddle().multiply(ap.getMiddle()).subtract(ap.getSmall().multiply(ap.getSmall()));
              BigInteger highDiff = ap.getHigh().multiply(ap.getHigh()).subtract(ap.getMiddle().multiply(ap.getMiddle()));
@@ -103,12 +116,21 @@ Prime factors:[5, 13, 17]
              assertEquals(lowDiff,ap.getDifference());                            
          }
 
-           BigInteger minimum = SquareUtil.findBestMatchOfAddingTwoComparedToThirdBisectionFromAps(apSquares);        
-           assertEquals(new BigInteger("264"),minimum);
+           Minimum3Tuppel3SquaresInAPBigNumber best3MatchAps = SquareUtil.findBestMatchOfAddingTwoComparedToThirdBisectionFromAps(apSquares);                             
+           assertEquals(new BigInteger("264"),best3MatchAps.getDifference());
         
-           //TODO find which numbers give the minimum!
-        
-        
+              TreeSet<BigInteger> diffs = new TreeSet<BigInteger>(); 
+            
+              for (Tuppel3SquaresInAPBigNumber tup : best3MatchAps.getAps() ) {
+                  diffs.add(tup.getDifference());                                    
+              }
+              //they are now sorted.
+              Iterator<BigInteger> it = diffs.iterator();
+              
+               BigInteger difCalculated = it.next().add(it.next().subtract(it.next()));
+               difCalculated=difCalculated.abs(); //is negative
+               assertEquals(new BigInteger("264"),difCalculated);
+              
         
     }
                 
