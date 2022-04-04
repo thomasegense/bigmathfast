@@ -56,6 +56,10 @@ Prime factors:[5, 13, 17]
 (533^2 , 1105^2 , 1469^2) with step value:936936
 (595^2 , 1105^2 , 1445^2) with step value:867000
               
+              
+264 is best difference              
+              
+              
  */
 
         
@@ -99,8 +103,11 @@ Prime factors:[5, 13, 17]
              assertEquals(lowDiff,ap.getDifference());                            
          }
 
+        BigInteger minimum = SquareUtil.findBestMatchOfAddingTwoComparedToThirdBisectionFromAps(apSquares);
         
-        //TODO find minumum
+          assertEquals(new BigInteger("264"),minimum);
+        
+ 
         
         
         
