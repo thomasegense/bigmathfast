@@ -21,8 +21,12 @@ public class InverseElementInZN {
     public static BigInteger B18 = new BigInteger("18");
 
     //(6k + 1)(12k + 1)(18k + 1) is Carmichael number if all 3 factors prime
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
 
+        
+        //System.out.println(inverseElementInZn(new BigInteger("30"), new BigInteger("5")));
+       // System.exit(1);
+        
     	  BigInteger p = B3;
           BigInteger q = B5;
 
@@ -59,7 +63,7 @@ public class InverseElementInZN {
         //System.out.println(inverseElementInZn(new BigInteger("7"), new BigInteger("15"))); //invers til 15 i mod 7
 
         
-        System.out.println(inverseElementInZn(new BigInteger("30"), new BigInteger("5")));
+      
         
         
         ArrayList<BigInteger> findRootsOfUnityMerging = findRootsOfUnityMerging(new BigInteger("600000000000000000000000000017881"), new BigInteger("1200000000000000000000000000035761"), new BigInteger("1800000000000000000000000000053641"));
@@ -144,7 +148,7 @@ public class InverseElementInZN {
     }
 
     //expand so not only finding x^2=1 but also x^2=b
-    public static ArrayList<BigInteger> findRootsOfUnity(BigInteger p1, BigInteger p2) {
+    public static ArrayList<BigInteger> findRootsOfUnity(BigInteger p1, BigInteger p2) throws Exception {
 
         BigInteger n = p1.multiply(p2);
 
@@ -209,7 +213,7 @@ public class InverseElementInZN {
     }
     
     
-    static ArrayList<BigInteger> addMoreRootsOfUnity(ArrayList<BigInteger> roots1, BigInteger number1, BigInteger number2){
+    static ArrayList<BigInteger> addMoreRootsOfUnity(ArrayList<BigInteger> roots1, BigInteger number1, BigInteger number2) throws Exception{
         BigInteger n= number1.multiply(number2);
         
 
@@ -242,7 +246,7 @@ public class InverseElementInZN {
     }
     //    
     //expand so not only finding x^2=1
-    static ArrayList<BigInteger> findRootsOfUnityMerging(BigInteger p1, BigInteger p2, BigInteger p3) {
+    static ArrayList<BigInteger> findRootsOfUnityMerging(BigInteger p1, BigInteger p2, BigInteger p3) throws Exception {
         //first finde for first two
 
         ArrayList<BigInteger> rootsOfUnity = findRootsOfUnity(p1, p2); // now these will contain more than -1 and 1
@@ -258,15 +262,25 @@ public class InverseElementInZN {
      * TODO fix, so throwing exception when element does not exist.
      * 
      */
-    public static BigInteger inverseElementInZn(BigInteger n, BigInteger element) {
+    public static BigInteger inverseElementInZn(BigInteger n, BigInteger element) throws Exception {
 
-        BigInteger[] vals = EuclideanAlgorithm.gcdExtendedEuclid(n, element);
-        //TODO check q is one
-        if (vals[2].compareTo(B0) < 0) {
-            return vals[2].add(n);
-        } else {
-            return vals[2];
+        if (B1.equals(element)) {
+            return B1;            
         }
+        
+        BigInteger[] vals = EuclideanAlgorithm.gcdExtendedEuclid(n, element);
+        BigInteger inverse= null;       
+        
+        if (vals[2].compareTo(B0) < 0) {
+            inverse= vals[2].add(n);
+        } else {
+            inverse= vals[2];            
+        }
+    if (B1.equals(inverse)) {
+        throw new Exception("No inverse element for:"+element +" in "+ n);
+    }
+        
+        return inverse;
     }
 
 }
