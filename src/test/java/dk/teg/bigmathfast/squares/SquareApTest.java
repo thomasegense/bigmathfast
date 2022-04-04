@@ -145,7 +145,7 @@ And this happens for the 3 AP (where without the power 2 notation)
         factors.addAll(factors);
         
         ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.createAllNumberExpressedInSumOfSquares(factors);
-        
+        assertEquals(1823,apSquares.size());        
         Minimum3Tuppel3SquaresInAPBigNumber best3MatchAps = SquareUtil.findBestMatchOfAddingTwoComparedToThirdBisectionFromAps(apSquares);
         assertEquals(new BigInteger("32509509696"), best3MatchAps.getDifference());
     }
