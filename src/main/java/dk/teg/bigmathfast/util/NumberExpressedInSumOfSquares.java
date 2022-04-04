@@ -2,6 +2,8 @@ package dk.teg.bigmathfast.util;
 import java.math.BigInteger;
 
 
+//see http://thomas-egense.dk/math/squares_in_arithmetic_progression.html
+
 //r^2+s^2=n , r<=s
 public class NumberExpressedInSumOfSquares {
 
