@@ -103,11 +103,10 @@ Prime factors:[5, 13, 17]
              assertEquals(lowDiff,ap.getDifference());                            
          }
 
-        BigInteger minimum = SquareUtil.findBestMatchOfAddingTwoComparedToThirdBisectionFromAps(apSquares);
+           BigInteger minimum = SquareUtil.findBestMatchOfAddingTwoComparedToThirdBisectionFromAps(apSquares);        
+           assertEquals(new BigInteger("264"),minimum);
         
-          assertEquals(new BigInteger("264"),minimum);
-        
- 
+           //TODO find which numbers give the minimum!
         
         
         
