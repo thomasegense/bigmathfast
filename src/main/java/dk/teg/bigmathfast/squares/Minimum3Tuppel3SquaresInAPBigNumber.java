@@ -1,25 +1,25 @@
-package dk.teg.bigmathfast.util;
+package dk.teg.bigmathfast.squares;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
 
 public class Minimum3Tuppel3SquaresInAPBigNumber {
 
-    ArrayList<Tuppel3SquaresInAPBigNumber> aps;
+    ArrayList<NumberExpressedInSumOfSquares> aps;
     BigInteger difference;
     
     
      
-    public Minimum3Tuppel3SquaresInAPBigNumber(ArrayList<Tuppel3SquaresInAPBigNumber> aps,BigInteger difference) {
+    public Minimum3Tuppel3SquaresInAPBigNumber(ArrayList<NumberExpressedInSumOfSquares> aps,BigInteger difference) {
         this.aps=aps;
         this.difference=difference;       
     }
 
-    public ArrayList<Tuppel3SquaresInAPBigNumber> getAps() {
+    public ArrayList<NumberExpressedInSumOfSquares> getAps() {
         return aps;
     }
 
-    public void setAps(ArrayList<Tuppel3SquaresInAPBigNumber> aps) {
+    public void setAps(ArrayList<NumberExpressedInSumOfSquares> aps) {
         this.aps = aps;
     }
 
@@ -31,6 +31,8 @@ public class Minimum3Tuppel3SquaresInAPBigNumber {
         this.difference = difference;
     }
     
-    
+    public BigInteger getRatio() {
+        return aps.get(0).getNroot().divide(difference);
+    }
     
 }

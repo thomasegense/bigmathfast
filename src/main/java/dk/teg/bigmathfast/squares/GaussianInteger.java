@@ -1,5 +1,5 @@
+package dk.teg.bigmathfast.squares;
 
-package dk.teg.bigmathfast.util;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;

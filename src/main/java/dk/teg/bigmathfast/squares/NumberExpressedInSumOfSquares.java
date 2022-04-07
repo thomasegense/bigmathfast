@@ -1,8 +1,11 @@
-package dk.teg.bigmathfast.util;
+package dk.teg.bigmathfast.squares;
+
 import java.math.BigInteger;
 
+import dk.teg.bigmathfast.util.SquareUtil;
 
-//see http://thomas-egense.dk/math/squares_in_arithmetic_progression.html
+
+
 
 //r^2+s^2=n , r<=s
 public class NumberExpressedInSumOfSquares {
@@ -31,10 +34,14 @@ public class NumberExpressedInSumOfSquares {
              
              
               this.n = n;
-          this.nSqroot=SquareUtil.bigintroot(n);
+          this.nSqroot=SquareUtil.sqrt(n);
      
       }
-                   
+                 
+      public BigInteger getNroot() {
+          return nSqroot;
+  }
+      
       public BigInteger getR() {
               return r;
       }
@@ -58,8 +65,6 @@ public class NumberExpressedInSumOfSquares {
       public void setN(BigInteger n) {
               this.n = n;
       }
-
-     
      
       public Tuppel3SquaresInAPBigNumber getAPBigNumber(){
               return new Tuppel3SquaresInAPBigNumber(r.subtract(s),nSqroot,r.add(s),B2.multiply(r.multiply(s)));

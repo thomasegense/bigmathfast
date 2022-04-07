@@ -7,6 +7,11 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 
+import dk.teg.bigmathfast.squares.DecomposedPrime;
+import dk.teg.bigmathfast.squares.Minimum3Tuppel3SquaresInAPBigNumber;
+import dk.teg.bigmathfast.squares.NumberExpressedInSumOfSquares;
+import dk.teg.bigmathfast.squares.Tuppel3SquaresInAPBigNumber;
+
 
 
 
@@ -47,6 +52,30 @@ public class SquareUtil {
         
         return numberOfExpressions;
     }
+    
+    public static ArrayList<NumberExpressedInSumOfSquares>  combineNumberExpressedInSumOfSquaresMultiple ( ArrayList<NumberExpressedInSumOfSquares> oldList, NumberExpressedInSumOfSquares newOne){
+                
+        ArrayList<NumberExpressedInSumOfSquares> numberOfExpressions = new ArrayList<NumberExpressedInSumOfSquares>();  
+        
+        HashSet<NumberExpressedInSumOfSquares> temp = new HashSet<NumberExpressedInSumOfSquares>();
+        
+        for (int j =0;j<oldList.size();j++){
+            ArrayList<NumberExpressedInSumOfSquares> newExpressions = SquareUtil.combineNumberExpressedInSumOfSquares( oldList.get(j),newOne);
+               temp.addAll(newExpressions);                                                  
+        }                                  
+                   
+        numberOfExpressions=  new ArrayList<NumberExpressedInSumOfSquares>();
+        Iterator<NumberExpressedInSumOfSquares>  it=temp.iterator();
+
+        while (it.hasNext()){                           
+            numberOfExpressions.add(it.next());  
+        }               
+        
+       return numberOfExpressions;
+    }
+    
+    
+    
     
     //(a2+b2)(c2+d2)=(ac+bd)2+(ad-bc)2= (ac-bd)2+(ad+bc)^2
     public static ArrayList<NumberExpressedInSumOfSquares> combineNumberExpressedInSumOfSquares( NumberExpressedInSumOfSquares n1, NumberExpressedInSumOfSquares n2){
@@ -112,25 +141,27 @@ public class SquareUtil {
  	    }
  	    
  	    
- 	    
- 	    
- 	    
  	   ArrayList<BigInteger> results = findBestMatchOfAddingTwoComparedToThirdBisection(list);      
  	   //Now match the difference to the difference in AP. (not optimal) 	       
  	    
+ 	   
  	   BigInteger bestMatch=results.remove(3); //Difference, not from an AP
- 	   ArrayList<Tuppel3SquaresInAPBigNumber > bestAps = new ArrayList<Tuppel3SquaresInAPBigNumber >();  
+ 	   ArrayList<NumberExpressedInSumOfSquares > bestAps = new ArrayList<NumberExpressedInSumOfSquares>();  
+ 	   
+ 	   
  	   
  	   for (NumberExpressedInSumOfSquares ap : aps) {
  	      Tuppel3SquaresInAPBigNumber tuppelAP = ap.getAPBigNumber(); 
  	      
- 	       if (results.contains(tuppelAP.difference)) {
- 	           bestAps.add(tuppelAP); 	           
+ 	       if (results.contains(tuppelAP.getDifference())) {
+ 	           bestAps.add(ap); 	           
  	       }
  	       if (bestAps.size() == 3) { 	           	           
  	           return new Minimum3Tuppel3SquaresInAPBigNumber(bestAps,bestMatch); 	            	           
+ 	          
  	       } 	       
  	   } 	   
+ 	   
  	   throw new RuntimeException("Logic error!");
  	   
  	}
@@ -268,6 +299,39 @@ public class SquareUtil {
         
         return result;
     } 
+    
+
+    /*
+     * Fast implementation of squareRoot for BigIntegers
+     *   
+     */
+    public static BigInteger sqrt(BigInteger n) {
+        int currBit = n.bitLength() / 2;
+
+        BigInteger remainder = n;
+        BigInteger currSquared = BigInteger.ZERO.setBit(2*currBit);
+
+        BigInteger temp = BigInteger.ZERO;
+        BigInteger toReturn = BigInteger.ZERO;
+
+        BigInteger potentialIncrement;
+        do {
+            temp = toReturn.setBit(currBit);
+            potentialIncrement = currSquared.add(toReturn.shiftLeft(currBit+1));
+
+            int cmp = potentialIncrement.compareTo(remainder);
+            if (cmp < 0) {
+                toReturn = temp;
+                remainder = remainder.subtract(potentialIncrement);
+            }
+            else if (cmp == 0) {
+                return temp;
+            }
+            currBit--;
+            currSquared = currSquared.shiftRight(2);
+        } while (currBit >= 0);
+        return toReturn;
+    }
 
     
 }

@@ -7,10 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import dk.teg.bigmathfast.BigMathFast;
-import dk.teg.bigmathfast.util.Minimum3Tuppel3SquaresInAPBigNumber;
-import dk.teg.bigmathfast.util.NumberExpressedInSumOfSquares;
+import dk.teg.bigmathfast.primes.MillerRabin;
 import dk.teg.bigmathfast.util.SquareUtil;
-import dk.teg.bigmathfast.util.Tuppel3SquaresInAPBigNumber;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -121,8 +119,8 @@ And this happens for the 3 AP (where without the power 2 notation)
         
               TreeSet<BigInteger> diffs = new TreeSet<BigInteger>(); 
             
-              for (Tuppel3SquaresInAPBigNumber tup : best3MatchAps.getAps() ) {
-                  diffs.add(tup.getDifference());                                    
+              for (NumberExpressedInSumOfSquares tup : best3MatchAps.getAps() ) {
+                  diffs.add(tup.getAPBigNumber().getDifference());                                    
               }
               //they are now sorted.
               Iterator<BigInteger> it = diffs.iterator();
@@ -132,6 +130,29 @@ And this happens for the 3 AP (where without the power 2 notation)
                assertEquals(new BigInteger("264"),difCalculated);                      
     }
  
+    
+    
+    
+    
+
+    @Test
+    void  testRatio() {
+          
+        //All prime factors == 1 mod 4
+        //This number has an exceptional low difference for its size.
+        BigInteger number = new BigInteger("166193842205"); //the mega monster
+        
+        ArrayList<BigInteger> factors = BigMathFast.factorize(number);
+        
+        factors.addAll(factors);
+        
+        ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.createAllNumberExpressedInSumOfSquares(factors);
+                
+        Minimum3Tuppel3SquaresInAPBigNumber best3MatchAps = SquareUtil.findBestMatchOfAddingTwoComparedToThirdBisectionFromAps(apSquares);
+        assertEquals(new BigInteger("40551216"), best3MatchAps.getDifference());
+        assertEquals(new BigInteger("4098"), best3MatchAps.getRatio());
+    }
+    
     
     @Test
     void  testLargeNumber() {
@@ -150,6 +171,90 @@ And this happens for the 3 AP (where without the power 2 notation)
         assertEquals(new BigInteger("32509509696"), best3MatchAps.getDifference());
     }
      
+    
+    
+    @Test
+    void  testCombineAPs() {
+        ArrayList<BigInteger> factors = new  ArrayList<BigInteger>();
+        factors.add(new BigInteger("5"));
+        factors.add(new BigInteger("13"));
+        factors.addAll(factors);
+     
+        
+        ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.createAllNumberExpressedInSumOfSquares(factors);   
+        System.out.println(apSquares);   
+        DecomposedPrime p1 = DecomposedPrime.create(new BigInteger("17"));
+        NumberExpressedInSumOfSquares newOne = p1.getNumberExpressedInSumOfSquares();
+        
+
+        //Must combine twice. Maybe do this is method.
+        ArrayList<NumberExpressedInSumOfSquares> combined = SquareUtil.combineNumberExpressedInSumOfSquaresMultiple(apSquares, newOne);
+        combined = SquareUtil.combineNumberExpressedInSumOfSquaresMultiple(combined, newOne);
+        Minimum3Tuppel3SquaresInAPBigNumber tup = SquareUtil.findBestMatchOfAddingTwoComparedToThirdBisectionFromAps(combined);
+        
+        assertEquals(new BigInteger("264"),tup.getDifference());
+                
+    }
+
+
+
+    
+
+    @Test
+    void  testX() {
+
+            //
+        //    [5, 13, 17]
+        //      [(391,1105,1513:1068144), (1057,1105,1151:103776), (221,1105,1547:1172184)]
+
+        
+        
+        ArrayList<BigInteger> factors = new  ArrayList<BigInteger>();
+        factors.add(new BigInteger("5"));
+        factors.add(new BigInteger("13"));
+                   
+        factors.addAll(factors);
+        
+        ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.createAllNumberExpressedInSumOfSquares(factors);        
+        Minimum3Tuppel3SquaresInAPBigNumber tup= SquareUtil.findBestMatchOfAddingTwoComparedToThirdBisectionFromAps(apSquares);
+        Minimum3Tuppel3SquaresInAPBigNumber newTup=findBestNewFactor(tup, 100);
+        System.out.println(newTup.getDifference());
+        System.out.println(newTup.getAps());
+        System.out.println(newTup.getRatio());
+    }
+     
+    
+    
+    public  Minimum3Tuppel3SquaresInAPBigNumber findBestNewFactor(Minimum3Tuppel3SquaresInAPBigNumber aps, long max) {
+        
+        BigInteger bestMatch = new BigInteger("9999999999999999999999999999999999999999999999999999999999999999");
+        Minimum3Tuppel3SquaresInAPBigNumber bestTup=null; 
+        for (int i =1;i<max;i++) {
+            int maybePrime=4*i+1;
+            BigInteger maybePrimeBig = new BigInteger(""+maybePrime);
+            
+            if (new MillerRabin(maybePrimeBig,20).isPrime()) {
+
+                DecomposedPrime decompPrime = DecomposedPrime.create(maybePrimeBig);
+                NumberExpressedInSumOfSquares newAP =  decompPrime.getNumberExpressedInSumOfSquares();
+                
+                ArrayList<NumberExpressedInSumOfSquares>  combined = SquareUtil.combineNumberExpressedInSumOfSquaresMultiple(aps.getAps(), newAP);
+                combined = SquareUtil.combineNumberExpressedInSumOfSquaresMultiple(combined, newAP);
+                               
+                Minimum3Tuppel3SquaresInAPBigNumber tup = SquareUtil.findBestMatchOfAddingTwoComparedToThirdBisectionFromAps(combined);                                         
+                    
+                if (tup.getDifference().compareTo(bestMatch) < 1) {
+                  bestMatch=tup.getDifference();
+                  bestTup=tup;                                        
+                }                                            
+            }                               
+        }
+      return bestTup;
+    
+    }
+    
+    
+    
     
 }
 

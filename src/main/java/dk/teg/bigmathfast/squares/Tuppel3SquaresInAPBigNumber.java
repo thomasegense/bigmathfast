@@ -1,4 +1,5 @@
-package dk.teg.bigmathfast.util;
+
+package dk.teg.bigmathfast.squares;
 
 import java.math.BigInteger;
 
@@ -11,8 +12,6 @@ public class Tuppel3SquaresInAPBigNumber {
         BigInteger  high;
         BigInteger  difference;
         
-        
-       
        
         public Tuppel3SquaresInAPBigNumber(BigInteger small, BigInteger middle,
                         BigInteger high, BigInteger difference) {

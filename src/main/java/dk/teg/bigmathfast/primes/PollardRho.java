@@ -61,6 +61,65 @@ public class PollardRho {
     }
 
 
+    
+    //Will return primefactors if all are =1 mod 4. Else return null
+    public static ArrayList<BigInteger> factorOnlyIfAllPrimeFactors1Mod4(BigInteger N) {                    
+        return factorOnlyIfAllPrimeFactors1Mod4(N,new ArrayList<BigInteger>());    
+    }
+    
+    // return null is any prime =3 (mod4)
+    private static ArrayList<BigInteger> factorOnlyIfAllPrimeFactors1Mod4(BigInteger N, ArrayList<BigInteger> currentFactors) {
+      
+      
+      if (N.compareTo(ONE) == 0) return currentFactors;
+      //if (N.isProbablePrime(20)) { 
+      if (isProbablyPrime(N)) { //use fast method
+          
+          if (is1Mod4(N)){
+            currentFactors.add(N);              
+            return currentFactors;
+          }           
+           
+          else{
+              return null;
+           }
+          }
+      BigInteger divisor = rho(N);
+      factorOnlyIfAllPrimeFactors1Mod4(divisor, currentFactors);
+      factorOnlyIfAllPrimeFactors1Mod4(N.divide(divisor),currentFactors);
+      return currentFactors;
+ 
+  }
+    
+    private static boolean isProbablyPrime(BigInteger b){
+      MillerRabin m = new MillerRabin(b, 20);
+  
+      /* For test the custom rabin miller gives same result
+      if (m.isPrime() != b.isProbablePrime(20)){ 
+          System.out.println("prime problem:"+b);
+   System.exit(1);
+      }
+  */
+      return m.isPrime();                
+  }
+  
+    
+    private static boolean is1Mod4(BigInteger number){
+      String numberStr=number.toString();
+      String lastTwoDigits=null;
+      if (numberStr.length()==1){
+          lastTwoDigits=numberStr;
+      }
+      else{
+          lastTwoDigits=numberStr.substring(numberStr.length()-2,numberStr.length());
+      }
+
+      long lastTwoDigitsLong = Long.parseLong(lastTwoDigits);
+
+      return (lastTwoDigitsLong %4 == 1);
+
+  }
+    
 /*
  * TODO unittest
  */
