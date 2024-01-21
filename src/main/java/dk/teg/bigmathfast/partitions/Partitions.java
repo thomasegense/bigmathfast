@@ -143,29 +143,6 @@ public class Partitions {
 		return false;
 	}
 
-	// TODO move new class
-	private static ArrayList<ArrayList<Integer>> getAllPermutations(ArrayList<Integer> ints) {
-		if (ints.size() == 1) {
-			ArrayList<ArrayList<Integer>> list = new ArrayList<>();
-			list.add(ints);
-			return list;
-		} else {
-			ArrayList<ArrayList<Integer>> list = new ArrayList<>();
-			for (Integer i : ints) {
-				ArrayList<Integer> subList = new ArrayList<>(ints);
-				subList.remove(i);
-				ArrayList<ArrayList<Integer>> subListNew = getAllPermutations(subList);
-				for (ArrayList<Integer> _list : subListNew) {
-					ArrayList<Integer> local = new ArrayList<>();
-					local.add(i);
-					local.addAll(_list);
-					list.add(local);
-				}
-			}
-			return list;
-		}
-	}
-
 	private static ArrayList<ArrayList<Integer>> convert(ArrayList<String> paritions) {
 		ArrayList<ArrayList<Integer>> list = new ArrayList<ArrayList<Integer>>();
 
