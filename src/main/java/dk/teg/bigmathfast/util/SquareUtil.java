@@ -11,7 +11,7 @@ import dk.teg.bigmathfast.squares.DecomposedPrime;
 import dk.teg.bigmathfast.squares.Minimum3Tuppel3SquaresInAPBigNumber;
 import dk.teg.bigmathfast.squares.NumberExpressedInSumOfSquares;
 import dk.teg.bigmathfast.squares.Tuppel3SquaresInAPBigNumber;
-
+import dk.teg.bigmathfast.primes.PollardRho;
 
 
 
@@ -20,6 +20,43 @@ import dk.teg.bigmathfast.squares.Tuppel3SquaresInAPBigNumber;
 public class SquareUtil {
 
     final static BigInteger B0 = new BigInteger("0");
+ 
+    
+    public static void main(String[] args) {
+        
+        //Is square of the number
+        ArrayList<NumberExpressedInSumOfSquares> allAPofSquares = getAllAPofSquares(new BigInteger("1885"));
+        System.out.println(allAPofSquares);
+        
+        Minimum3Tuppel3SquaresInAPBigNumber m= findBestMatchOfAddingTwoComparedToThirdBisectionFromAps(allAPofSquares);
+        
+        System.out.println(m.getAps());
+        System.out.println(m.getDifference());
+        
+        
+        
+      }
+    
+    
+    /**
+     *  
+     * 
+     */
+    public static ArrayList<NumberExpressedInSumOfSquares> getAllAPofSquares(BigInteger big){
+
+
+          ArrayList<BigInteger> factors = PollardRho.factorOnlyIfAllPrimeFactors1Mod4(big);
+                 
+          if (factors == null || factors.size()==1){//aps.size will be 2 if only 1 factor      
+              return new ArrayList<NumberExpressedInSumOfSquares>(); 
+          }       
+
+          factors.addAll(factors); 
+
+          ArrayList<NumberExpressedInSumOfSquares> aps = SquareUtil.createAllNumberExpressedInSumOfSquares(factors);
+          return aps;
+      }
+    
     
   //Important method! really fast!
     //Factors are prime=1 mod 4!
@@ -162,7 +199,7 @@ public class SquareUtil {
  	       } 	       
  	   } 	   
  	   
- 	   throw new RuntimeException("Logic error!");
+ 	   throw new RuntimeException("Logic error! aps:"+aps.toString());
  	   
  	}
  	
