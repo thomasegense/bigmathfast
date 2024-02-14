@@ -130,8 +130,7 @@ public class SquareApTest{
 
     @Test
     void  testBestMinimumDifference() {
-        //trest the optimized bi-section method to find minmimum difference is correct by comparing to a brute force
-        
+        //trest the optimized bi-section method to find minmimum difference is correct by comparing to a brute force        
         //TODO
     }
     
