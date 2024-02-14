@@ -31,6 +31,8 @@ public class Minimum3Tuppel3SquaresInAPBigNumber {
         this.difference = difference;
     }
     
+    
+    //TODO remove this. It is replaced with the better calculateQuality in SquareUtil
     public BigInteger getRatio() {
         return aps.get(0).getNroot().divide(difference);
     }
