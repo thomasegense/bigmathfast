@@ -86,7 +86,7 @@ public class SearchHourglass2 {
         for (NumberExpressedInSumOfSquares apBefore:apSquaresBefore) {
             System.out.println("Before:"+apBefore.getAPBigNumber());
         }
-        System.out.println("Q="+SearchHourglass.getQuality(best3MatchApsBefore.getDifference(),best3MatchApsBefore.getAps().get(0).getNroot()));
+        System.out.println("Q="+SquareUtil.calculateQuality(best3MatchApsBefore.getDifference(),best3MatchApsBefore.getAps().get(0).getNroot()));
         for (NumberExpressedInSumOfSquares bestApBefore : best3MatchApsBefore.getAps()) {
             System.out.println(bestApBefore.getAPBigNumber());            
         }
@@ -94,7 +94,7 @@ public class SearchHourglass2 {
         System.out.println("diff:"+best3MatchApsBefore.getDifference());
         System.out.println("--------");
         System.out.println("diff:"+best3MatchApsAfter.getDifference());
-        System.out.println("Q="+SearchHourglass.getQuality(best3MatchApsAfter.getDifference(),best3MatchApsAfter.getAps().get(0).getNroot()));                
+        System.out.println("Q="+SquareUtil.calculateQuality(best3MatchApsAfter.getDifference(),best3MatchApsAfter.getAps().get(0).getNroot()));                
         for (NumberExpressedInSumOfSquares bestApAfter : best3MatchApsAfter.getAps()) {
             System.out.println(bestApAfter.getAPBigNumber());            
         }

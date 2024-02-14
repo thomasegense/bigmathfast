@@ -107,7 +107,7 @@ public class SpectralLinesPlot {
         ig2.drawString("n="+number, 100, 40);
         ig2.drawString("factors="+BigMathFast.factorize(number), 100, 80);
         ig2.drawString("#AP="+allAPofSquares.size(), 100, 120);
-        ig2.drawString("#Quality="+SearchHourglass.getQuality(best3MatchAps.getDifference(), number), 100, 160);
+        ig2.drawString("#Quality="+SquareUtil.calculateQuality(best3MatchAps.getDifference(), number), 100, 160);
         //Below spectral lines
 
         Tuppel3SquaresInAPBigNumber bestDiff1 = best3MatchAps.getAps().get(0).getAPBigNumber();        
@@ -192,7 +192,7 @@ public class SpectralLinesPlot {
         for (BigInteger f : list) {
            b=b.multiply(f);
         }
-        return b;    }
+        return b; 
+        }
     
-
 }
