@@ -2,10 +2,6 @@ package dk.teg.bigmathfast.squares;
 
 import java.math.BigInteger;
 
-import dk.teg.bigmathfast.util.SquareUtil;
-
-
-
 
 //r^2+s^2=n , r<=s
 public class NumberExpressedInSumOfSquares {

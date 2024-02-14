@@ -6,7 +6,7 @@ import java.util.Collections;
 
 import dk.teg.bigmathfast.BigMathFast;
 import dk.teg.bigmathfast.primes.MillerRabin;
-import dk.teg.bigmathfast.util.SquareUtil;
+
 
 public class ApSquaresSpectralVisualization {
 

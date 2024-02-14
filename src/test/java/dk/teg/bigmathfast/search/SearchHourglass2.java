@@ -8,7 +8,8 @@ import java.util.Random;
 import dk.teg.bigmathfast.BigMathFast;
 import dk.teg.bigmathfast.squares.Minimum3Tuppel3SquaresInAPBigNumber;
 import dk.teg.bigmathfast.squares.NumberExpressedInSumOfSquares;
-import dk.teg.bigmathfast.util.SquareUtil;
+import dk.teg.bigmathfast.squares.SquareUtil;
+
 
 
 
@@ -112,12 +113,6 @@ public class SearchHourglass2 {
             }
             
             
-            
-            
-            
-            
-            
-            
         }
         
         
@@ -126,17 +121,5 @@ public class SearchHourglass2 {
 	}
     
 	
-	
-	
-	
-	public static boolean allFactors1Mod4(ArrayList<BigInteger> factors) {
-	    for (BigInteger b:factors) {
-	        if (!b.mod(B4).equals(B1)) {
-	            return false;
-	        }
-	        
-	    }
-	    return true;
-	}
 		
 }

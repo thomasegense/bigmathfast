@@ -8,7 +8,8 @@ import java.util.Random;
 import dk.teg.bigmathfast.BigMathFast;
 import dk.teg.bigmathfast.squares.Minimum3Tuppel3SquaresInAPBigNumber;
 import dk.teg.bigmathfast.squares.NumberExpressedInSumOfSquares;
-import dk.teg.bigmathfast.util.SquareUtil;
+import dk.teg.bigmathfast.squares.SquareUtil;
+
 
 
 
@@ -40,9 +41,9 @@ public class SearchHourglass {
 	     //BigInteger number = new BigInteger("2697582499525"); //medium , q=1.13 [5, 5, 17, 37, 53, 157, 1553]	       	       	       	     
 	     //BigInteger number = new BigInteger("15434605016465"); // very good hit, q=1.36 [5, 17, 97, 109, 937, 18329]				
 	    //BigInteger number = new BigInteger("19742462232025"); //monster    , a=1.26	                                      
-// 
+//                                            
 	 //   BigInteger number = new BigInteger("21242099354125"); //very large good match 30661285800 , q=1.27 [5, 5, 5, 13, 17, 29, 113, 461, 509]
-	                                                                                       
+	                                                                                         
 	    //gInteger number=new BigInteger("5199676544945");	      
 	   //logResultWithValidate(number);
 	       
@@ -55,26 +56,18 @@ public class SearchHourglass {
 	       BigInteger number=B5; //always 5
 	       int n=5;
 
-	    //   number=number.multiply(new BigInteger("13")); //extra
+	       number=number.multiply(new BigInteger("13")); //extra
+	       number=number.multiply(new BigInteger("17")); //extra
+	       number=number.multiply(new BigInteger("29")); //extra
+	       number=number.multiply(new BigInteger("37")); //extra
 	       
 	       Random ran = new Random();	       
-	       n=7+n+ran.nextInt(25);
-	       number=number.multiply(getNextPrime1Mod4(n));
-	       
-	       
-           n=10+n+ran.nextInt(50);
+	       n=7+n+ran.nextInt(500);
+	       number=number.multiply(getNextPrime1Mod4(n));	       
+           n=10+n+ran.nextInt(5000);
            number=number.multiply(getNextPrime1Mod4(n));
-           
-           n=20+n+ran.nextInt(100);
-           number=number.multiply(getNextPrime1Mod4(n));
-           
-           n=20+n+ran.nextInt(500);
-           number=number.multiply(getNextPrime1Mod4(n));
-           
-           n=20+n+ran.nextInt(500);
-           number=number.multiply(getNextPrime1Mod4(n));
-           
-           n=20+n+ran.nextInt(20000);
+                                            
+           n=20+n+ran.nextInt(200000);
            BigInteger t=getNextPrime1Mod4(n);
            //System.out.println(t);
            number=number.multiply(t);
@@ -104,7 +97,7 @@ public class SearchHourglass {
     
           ArrayList<BigInteger> factors = BigMathFast.factorize(toTest);
           String factorsStr=factors.toString();
-          if (!allFactors1Mod4(factors)) {
+          if (!SquareUtil.allFactors1Mod4(factors)) {
              // System.out.println("Skipping:"+toTest +" has factors == 3(mod 4). Factors:"+factorsStr);
               return;
           }
@@ -121,7 +114,7 @@ public class SearchHourglass {
           Minimum3Tuppel3SquaresInAPBigNumber best3MatchAps = SquareUtil.findBestMatchOfAddingTwoComparedToThirdBisectionFromAps(apSquares);
       
          double q= getQuality(best3MatchAps.getDifference(), toTest);
-        if (q>0.86d) {
+        if (q>0.85d) {
         
             System.out.println("q="+q + " #APS:"+apSquares.size() +" factors:"+factorsStr  +" n="+toTest);
             //System.out.println("Number="+ toTest +" diff:"+best3MatchAps.getDifference() +" q="+q + " #APS:"+apSquares.size() +" factors:"+factorsStr);
@@ -193,16 +186,7 @@ public class SearchHourglass {
         return b;    }
     
 
-	
-	public static boolean allFactors1Mod4(ArrayList<BigInteger> factors) {
-	    for (BigInteger b:factors) {
-	        if (!b.mod(B4).equals(B1)) {
-	            return false;
-	        }
-	        
-	    }
-	    return true;
-	}
+
 	
 	/**
 	 * log(diff) /log(middleNumber^2)

@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import dk.teg.bigmathfast.BigMathFast;
 import dk.teg.bigmathfast.primes.MillerRabin;
-import dk.teg.bigmathfast.util.SquareUtil;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -196,7 +195,33 @@ And this happens for the 3 AP (where without the power 2 notation)
                 
     }
 
+    @Test
+    void  testBigIntLogaritm() {      
+        assertTrue( SquareUtil.bigIntLog(new BigInteger("10"), 10) - 1d <0.0001);
+        assertTrue( SquareUtil.bigIntLog(new BigInteger("2"), 2) - 1d <0.0001);
+        assertTrue( SquareUtil.bigIntLog(new BigInteger("100"), 10) - 2d <0.0001);               
+        assertTrue( SquareUtil.bigIntLog(new BigInteger("100"), 2.7182818d) - 4.60517d <0.0001); //natural log (e)    
+    }
+    
+    @Test
+    void  testCalculateQualityQuality() {
+        BigInteger number = new BigInteger("1885");
+        assertEquals(SquareUtil.calculateQuality(new BigInteger("120"), number),1.5753d);       
+    }
+    
 
+    
+    @Test
+    void  testApSquaresQuality() {
+        BigInteger number = new BigInteger("1885");
+        double q= SquareUtil.calculateQualityForAPSquares(number);
+        assertEquals(1.5753d,q);
+                
+        BigInteger number2 = new BigInteger("15434605016465"); // Has  365 different APs
+        double q2= SquareUtil.calculateQualityForAPSquares(number2);
+        assertEquals(1.3694d,q2);               
+    }
+    
 
     
 
@@ -252,6 +277,7 @@ And this happens for the 3 AP (where without the power 2 notation)
       return bestTup;
     
     }
+    
     
     
     

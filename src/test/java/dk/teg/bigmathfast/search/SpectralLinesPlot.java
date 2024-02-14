@@ -25,8 +25,9 @@ import javax.swing.WindowConstants;
 import dk.teg.bigmathfast.BigMathFast;
 import dk.teg.bigmathfast.squares.Minimum3Tuppel3SquaresInAPBigNumber;
 import dk.teg.bigmathfast.squares.NumberExpressedInSumOfSquares;
+import dk.teg.bigmathfast.squares.SquareUtil;
 import dk.teg.bigmathfast.squares.Tuppel3SquaresInAPBigNumber;
-import dk.teg.bigmathfast.util.SquareUtil;
+
 
 public class SpectralLinesPlot {
 

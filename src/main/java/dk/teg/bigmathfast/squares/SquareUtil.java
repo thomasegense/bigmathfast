@@ -1,6 +1,7 @@
-package dk.teg.bigmathfast.util;
+package dk.teg.bigmathfast.squares;
 
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,6 +12,7 @@ import dk.teg.bigmathfast.squares.DecomposedPrime;
 import dk.teg.bigmathfast.squares.Minimum3Tuppel3SquaresInAPBigNumber;
 import dk.teg.bigmathfast.squares.NumberExpressedInSumOfSquares;
 import dk.teg.bigmathfast.squares.Tuppel3SquaresInAPBigNumber;
+import dk.teg.bigmathfast.BigMathFast;
 import dk.teg.bigmathfast.primes.PollardRho;
 
 
@@ -20,6 +22,8 @@ import dk.teg.bigmathfast.primes.PollardRho;
 public class SquareUtil {
 
     final static BigInteger B0 = new BigInteger("0");
+    final static BigInteger B1 = new BigInteger("1");
+    final static BigInteger B4 = new BigInteger("4");
  
     
     public static void main(String[] args) {
@@ -370,5 +374,160 @@ public class SquareUtil {
         return toReturn;
     }
 
+    /**
+     * A sub-problem of the unsolved 'magic square of squares' is the Hourglass problem.<br>
+     * Finding 3 AP of squares with same middlenumber such the the difference of each from the middle number (step value) has s1+s2=s3. 
+     * 
+     * Example:<br>
+     * The number 1885 (5*13*29) has 7 different AP with 1885^2 as middle number.<br>
+     * The 3 AP giving the minimum difference are:<br>
+     *  (1015^2 ,1885^2,2465^2:2523000)          (1885^2-1015^2=2523000)<br>
+     *  (1651^2,1885^2,2093^2:827424)<br>
+     *  (1363^2,1885^2,2291^2:1695456)<br>
+     *  Difference 2523000-827424-1695456=120<br>
+     *   <br>
+     *  The quality q for the number 1885 with difference is q=1.5753<br> 
+     *  For calculation of the quality details see {@link #calculateQuality() calculateQuality}<br> 
+     <br>
+     * @param number The BigInteger to calcuate the quality for
+     * @return
+     * @throws IllegalArgumentException If the number does not have all primefactors ==1 (mod4) or there are less than 3 primefactors.
+     */
+    public static double calculateQualityForAPSquares(BigInteger number) throws IllegalArgumentException {
+       return calculateQualityForAPSquaresImpl(number, null);            
+    }
+   
+    /**
+    * See this method for the full documentation {@link #calculateQualityForAPSquares(BigInteger) calculateQualityForAPSquares}
+    *  
+    * @param factorsKnow The prime factors of the number to calculate the quality for.<br>
+    * Knowing the factors will save a factorization. <br>
+    * 
+    * 
+    * @return
+    * @throws IllegalArgumentException If the number does not have all primefactors ==1 (mod4) or there are less than 3 primefactors.
+    */
+    public static double calculateQualityForAPSquares( ArrayList<BigInteger> factorsKnown) throws IllegalArgumentException {
+        return calculateQualityForAPSquaresImpl(null, factorsKnown);            
+     }
+    
+  /*
+   * Method that two different public methods will call dependant of the number is already factored   
+   * Will only factor number is factors is null
+   *
+   *
+   */
+  private static double calculateQualityForAPSquaresImpl(BigInteger number,  ArrayList<BigInteger> factorsKnown) throws IllegalArgumentException {
+      
+      if (number== null && factorsKnown== null) {
+          throw new IllegalArgumentException("Number or factors are both null");
+      }
+      
+      ArrayList<BigInteger> factors = new ArrayList<BigInteger>();
+      if (factorsKnown== null || factorsKnown.size() ==0) {
+           factors= BigMathFast.factorize(number);      
+          
+      }
+      else {
+          factors=BigMathFast.factorize(number);          
+      }
+              
+      
+        
+        String factorsStr=factors.toString();
+        if (!allFactors1Mod4(factors)) {
+           // System.out.println("Skipping:"+toTest +" has factors == 3(mod 4). Factors:"+factorsStr);
+            throw new IllegalArgumentException("Not all factors of the numbers are ==1 (mod 4). Factors:"+factorsStr);            
+        }                  
+        factors.addAll(factors); //Yes, factors are double since the AP  are for squares.
+    
+        ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.createAllNumberExpressedInSumOfSquares(factors);            
+        if (apSquares.size() <4) {
+           // System.out.println("Skipping, not enough AP's for "+toTest  +" factors:"+factorsStr);
+            throw new IllegalArgumentException("Not enough prime factors to generate 4 or more AP. Prime factors:"+factorsStr);
+            
+        }
+        
+        Minimum3Tuppel3SquaresInAPBigNumber best3MatchAps = SquareUtil.findBestMatchOfAddingTwoComparedToThirdBisectionFromAps(apSquares);     
+        
+       double q= calculateQuality(best3MatchAps.getDifference(), number);
+       //  System.out.println("q="+q + " #APS:"+apSquares.size() +" factors:"+factorsStr  +" n="+toTest);
+       return q;
+             
+  }
+    
+    
+    /**
+     * The quality is a measure of small the best difference is compared to the middle number in the AP.
+     * The highest known quality is 1.6476 for the number 2665, that have APs with diff=120. 
+     * 1885 also have diff=120, but only quality 1.5753 because the difference is relative higher compared to the number
+     * 
+     * log(diff) /log(middleNumber^2)
+     * 
+     * @see <a href="https://thomas-egense.dk/math/BestQualityAP.html">Best quality for numbers up to 10E13.</a>
+     * 
+     * @param diff 
+     * @param middleNumbber
+     * @return The quality as a double 
+     */
+    public static double calculateQuality(BigInteger diff, BigInteger middleNumber) {
+        
+        double a=bigIntLog(middleNumber, 2);
+        double b=bigIntLog(diff, 2);        
+
+        //return diff.divide(middleNumbber).doubleValue();
+       String fourDigits=String.format("%.4f",a/b);
+        
+
+        return Double.valueOf(fourDigits.replaceAll(",", "."));
+        
+
+    }
+    
+
+    /**
+     * Calculate ln() for a BigInteger for a given log-base
+     * 
+     * @param number The BigInteger to calculate ln() for
+     * @param The log-base used for ln.
+     * 
+     * @return The ln(number) value as a double
+     * 
+     */
+    public static double bigIntLog(BigInteger number, double base) {
+
+        // Convert the BigInteger to BigDecimal
+        BigDecimal bd = new BigDecimal(number);
+        // Calculate the exponent 10^exp
+        BigDecimal diviser = new BigDecimal(10);
+        diviser = diviser.pow(number.toString().length()-1);
+        // Convert the BigDecimal from Integer to a decimal value
+        bd = bd.divide(diviser);
+        // Convert the BigDecimal to double
+        double bd_dbl = bd.doubleValue();
+        // return the log value
+        return (Math.log10(bd_dbl)+number.toString().length()-1)/Math.log10(base);
+    }
+    
+    
+    /**
+     *  
+     * Validate all factors are == 1 (mod 4)
+     * 
+     * Example 5,13,19
+     * 
+     * 
+     * @param factors
+     * @return true if all factors are ==1 (mod 4)
+     */
+     public static boolean allFactors1Mod4(ArrayList<BigInteger> factors) {
+        for (BigInteger b:factors) {
+            if (!b.mod(B4).equals(B1)) {         
+                return false;
+            }
+            
+        }
+        return true;
+    }
     
 }
