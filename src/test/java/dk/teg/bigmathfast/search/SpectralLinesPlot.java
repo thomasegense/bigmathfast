@@ -2,17 +2,14 @@ package dk.teg.bigmathfast.search;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.TreeSet;
 

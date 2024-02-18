@@ -10,8 +10,6 @@ import java.util.concurrent.Executors;
 
 import dk.teg.bigmathfast.BigMathFast;
 import dk.teg.bigmathfast.primes.MillerRabin;
-import dk.teg.bigmathfast.primes.PollardRho;
-import ar.alpertron.ecm.*;
 
 
 /*

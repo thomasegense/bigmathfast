@@ -14,11 +14,8 @@ package ar.alpertron.ecm;
 
 
 import java.math.*;
-import java.sql.BatchUpdateException;
+
 import java.util.ArrayList;
-import java.util.Arrays;
-
-
 
 public class Ecm  implements Runnable, FactorApplet
 {

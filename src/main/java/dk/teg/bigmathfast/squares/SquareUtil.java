@@ -1,17 +1,11 @@
 package dk.teg.bigmathfast.squares;
 
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
-
-import dk.teg.bigmathfast.squares.DecomposedPrime;
-import dk.teg.bigmathfast.squares.Minimum3Tuppel3SquaresInAPBigNumber;
-import dk.teg.bigmathfast.squares.NumberExpressedInSumOfSquares;
-import dk.teg.bigmathfast.squares.Tuppel3SquaresInAPBigNumber;
 import dk.teg.bigmathfast.util.BigMathFastUtil;
 import dk.teg.bigmathfast.BigMathFast;
 import dk.teg.bigmathfast.primes.PollardRho;

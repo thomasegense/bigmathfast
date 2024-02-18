@@ -1,11 +1,9 @@
 package dk.teg.bigmathfast.search;
 
-import java.math.BigDecimal;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Random;
 
-import dk.teg.bigmathfast.BigMathFast;
 import dk.teg.bigmathfast.squares.Minimum3Tuppel3SquaresInAPBigNumber;
 import dk.teg.bigmathfast.squares.NumberExpressedInSumOfSquares;
 import dk.teg.bigmathfast.squares.SquareUtil;

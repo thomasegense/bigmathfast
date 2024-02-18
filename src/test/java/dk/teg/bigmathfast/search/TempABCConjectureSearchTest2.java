@@ -3,12 +3,11 @@ package dk.teg.bigmathfast.search;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Collections;
+
 import java.util.HashSet;
 import java.util.Random;
 
 import ar.alpertron.ecm.Ecm;
-import dk.teg.bigmathfast.algebra.EuclideanAlgorithm;
 
 public class TempABCConjectureSearchTest2 {
 

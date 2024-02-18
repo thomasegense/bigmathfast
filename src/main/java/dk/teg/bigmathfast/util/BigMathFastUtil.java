@@ -38,6 +38,8 @@ public class BigMathFastUtil {
      * Calculate the squareroot rounded down to nearest Integer
      * 
      * @param n the number to calculate squareroot for.
+     * 
+     * @return The square root, rounded down to integer
      *      
      */
     public static BigInteger bigintroot(BigInteger n) {

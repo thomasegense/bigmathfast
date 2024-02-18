@@ -7,7 +7,6 @@ import java.math.BigInteger;
 
 import org.junit.jupiter.api.Test;
 
-import dk.teg.bigmathfast.algebra.EuclideanAlgorithm;
 
 public class AbcConjectureTest {
 

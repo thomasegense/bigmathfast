@@ -2,7 +2,6 @@ package dk.teg.bigmathfast.fareyapproximation;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -10,10 +9,6 @@ import dk.teg.bigmathfast.BigMathFast;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 
 
 
