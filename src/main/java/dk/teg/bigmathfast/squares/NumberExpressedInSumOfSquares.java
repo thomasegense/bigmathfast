@@ -2,6 +2,8 @@ package dk.teg.bigmathfast.squares;
 
 import java.math.BigInteger;
 
+import dk.teg.bigmathfast.util.BigMathFastUtil;
+
 
 //r^2+s^2=n , r<=s
 public class NumberExpressedInSumOfSquares {
@@ -30,7 +32,7 @@ public class NumberExpressedInSumOfSquares {
              
              
               this.n = n;
-          this.nSqroot=SquareUtil.sqrt(n);
+          this.nSqroot=BigMathFastUtil.bigintroot(n);
      
       }
                  

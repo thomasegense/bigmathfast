@@ -30,7 +30,7 @@ Q=1.5661
  *
  */
 
-
+//TODO delete this class
 public class SearchHourglass2 {
     private final static BigInteger B0= new BigInteger("0");
     private final static BigInteger B1= new BigInteger("1");

@@ -9,6 +9,7 @@ import dk.teg.bigmathfast.BigMathFast;
 import dk.teg.bigmathfast.squares.Minimum3Tuppel3SquaresInAPBigNumber;
 import dk.teg.bigmathfast.squares.NumberExpressedInSumOfSquares;
 import dk.teg.bigmathfast.squares.SquareUtil;
+import dk.teg.bigmathfast.util.BigMathFastUtil;
 
 
 
@@ -97,7 +98,7 @@ public class SearchHourglass {
     
           ArrayList<BigInteger> factors = BigMathFast.factorize(toTest);
           String factorsStr=factors.toString();
-          if (!SquareUtil.allFactors1Mod4(factors)) {
+          if (!BigMathFastUtil.allFactors1Mod4(factors)) {
              // System.out.println("Skipping:"+toTest +" has factors == 3(mod 4). Factors:"+factorsStr);
               return;
           }

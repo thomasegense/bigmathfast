@@ -49,7 +49,7 @@ public class SpectralLinesPlot {
         }        
         for (int i =3;i<factors.size();i++) {
          BigInteger number=multiplyList(factors.subList(0, i));
-         BufferedImage spectralLinesPlot = SpectralLinesPlot(number,false);
+         BufferedImage spectralLinesPlot = SpectralLinesPlotImage(number,false);
          String fileName="E:\\studie\\bigmathfast\\target\\"+i+"_"+number.toString() +".png";
          File f = new File(fileName);         
          ImageIO.write(spectralLinesPlot, "PNG", f);
@@ -61,7 +61,7 @@ public class SpectralLinesPlot {
     }
 
 
-    public static BufferedImage SpectralLinesPlot(BigInteger number , boolean showImage) {
+    public static BufferedImage SpectralLinesPlotImage(BigInteger number , boolean showImage) {
 
         ArrayList<NumberExpressedInSumOfSquares> allAPofSquares = SquareUtil.getAllAPofSquares(number);       
         System.out.println("number of aps:"+allAPofSquares.size()); 

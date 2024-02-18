@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import dk.teg.bigmathfast.BigMathFast;
 import dk.teg.bigmathfast.primes.MillerRabin;
+import dk.teg.bigmathfast.util.BigMathFastUtil;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -198,10 +199,10 @@ public class SquareApTest{
 
     @Test
     void  testBigIntLogaritm() {      
-        assertTrue( SquareUtil.bigIntLog(new BigInteger("10"), 10) - 1d <0.0001);
-        assertTrue( SquareUtil.bigIntLog(new BigInteger("2"), 2) - 1d <0.0001);
-        assertTrue( SquareUtil.bigIntLog(new BigInteger("100"), 10) - 2d <0.0001);               
-        assertTrue( SquareUtil.bigIntLog(new BigInteger("100"), 2.7182818d) - 4.60517d <0.0001); //natural log (e)    
+        assertTrue( BigMathFastUtil.bigIntLog(new BigInteger("10"), 10) - 1d <0.0001);
+        assertTrue( BigMathFastUtil.bigIntLog(new BigInteger("2"), 2) - 1d <0.0001);
+        assertTrue( BigMathFastUtil.bigIntLog(new BigInteger("100"), 10) - 2d <0.0001);               
+        assertTrue( BigMathFastUtil.bigIntLog(new BigInteger("100"), 2.7182818d) - 4.60517d <0.0001); //natural log (e)    
     }
 
     @Test
