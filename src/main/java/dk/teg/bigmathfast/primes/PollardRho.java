@@ -104,6 +104,10 @@ public class PollardRho {
   }
   
     
+    /*
+     * Need to test if this is faster than using MOD 4 for BigInteger
+     * 
+     */
     private static boolean is1Mod4(BigInteger number){
       String numberStr=number.toString();
       String lastTwoDigits=null;
@@ -120,13 +124,6 @@ public class PollardRho {
 
   }
     
-/*
- * TODO unittest
- */
-    public static void main(String[] args) {
-        BigInteger N = new BigInteger("10000000000000000000000000000000001");
-        System.out.println(factor(N));
-    }
 }
 
 

@@ -67,7 +67,7 @@ public class SearchHourglass {
            n=10+n+ran.nextInt(5000);
            number=number.multiply(getNextPrime1Mod4(n));
                                             
-           n=20+n+ran.nextInt(200000);
+           n=20+n+ran.nextInt(2000000);
            BigInteger t=getNextPrime1Mod4(n);
            //System.out.println(t);
            number=number.multiply(t);
@@ -104,7 +104,7 @@ public class SearchHourglass {
                     
           factors.addAll(factors);
       
-          ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.createAllNumberExpressedInSumOfSquares(factors);            
+          ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.getAllAPofSquares(factors);            
           if (apSquares.size() <4) {
              // System.out.println("Skipping, not enough AP's for "+toTest  +" factors:"+factorsStr);
               return;

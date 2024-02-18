@@ -54,7 +54,7 @@ public class ApSquaresSpectralVisualization {
         
         factors.addAll(factors);
         
-        ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.createAllNumberExpressedInSumOfSquares(factors);
+        ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.getAllAPofSquares(factors);
         ArrayList<BigInteger> lines = new ArrayList<BigInteger>();
         
         for (NumberExpressedInSumOfSquares n : apSquares) {            
@@ -95,7 +95,7 @@ public class ApSquaresSpectralVisualization {
         System.out.println(factors);
         factors.addAll(factors);
         
-        ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.createAllNumberExpressedInSumOfSquares(factors);
+        ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.getAllAPofSquares(factors);
         ArrayList<BigInteger> lines = new ArrayList<BigInteger>();
         
         for (NumberExpressedInSumOfSquares n : apSquares) {            

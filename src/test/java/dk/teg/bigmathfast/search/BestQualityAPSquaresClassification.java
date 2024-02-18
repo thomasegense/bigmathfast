@@ -55,7 +55,7 @@ public class BestQualityAPSquaresClassification {
                   
         factors.addAll(factors);
     
-        ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.createAllNumberExpressedInSumOfSquares(factors);            
+        ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.getAllAPofSquares(factors);            
        
         if (apSquares.size() <5) {
            System.out.println("Skipping, not enough AP's for "+toTest  +" factors:"+factorsStr);
@@ -101,7 +101,7 @@ public class BestQualityAPSquaresClassification {
         orgFactors.addAll(factors);
         factors.addAll(factors);
     
-        ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.createAllNumberExpressedInSumOfSquares(factors);            
+        ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.getAllAPofSquares(factors);            
         if (apSquares.size() <6) { //TODO maybe 6 (1 is the 0 diff one)
       //      System.out.println("no ancestor, too AP factors:"+apSquares);
             return null; 
@@ -119,7 +119,7 @@ public class BestQualityAPSquaresClassification {
             BigInteger ancestorOrg = multiplyList(ancestorFactors);           
             ancestorFactors.addAll(ancestorFactors);
             
-            ArrayList<NumberExpressedInSumOfSquares> ancestorFactorsApSquares = SquareUtil.createAllNumberExpressedInSumOfSquares(ancestorFactors);            
+            ArrayList<NumberExpressedInSumOfSquares> ancestorFactorsApSquares = SquareUtil.getAllAPofSquares(ancestorFactors);            
         
             Minimum3Tuppel3SquaresInAPBigNumber ancestrorBest3MatchAps = SquareUtil.findBestMatchOfAddingTwoComparedToThirdBisectionFromAps(ancestorFactorsApSquares);    
             double ancestorQ= SquareUtil.calculateQuality(ancestrorBest3MatchAps.getDifference(), ancestorOrg);                    

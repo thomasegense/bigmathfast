@@ -82,7 +82,7 @@ public class SquareApTest{
 
 
         //Test the 4 was to express 1105 as sum of squares
-        ArrayList<NumberExpressedInSumOfSquares> squareSum = SquareUtil.createAllNumberExpressedInSumOfSquares(factors);
+        ArrayList<NumberExpressedInSumOfSquares> squareSum = SquareUtil.getAllAPofSquares(factors);
         assertEquals(4 , squareSum.size());                       
         for (NumberExpressedInSumOfSquares squares : squareSum) {                    
             BigInteger sum = ( squares.getR().multiply(squares.getR())).add(squares.getS().multiply(squares.getS()) );        
@@ -94,7 +94,7 @@ public class SquareApTest{
         factors.addAll(factors); 
         //Transform into AP with middle number 1105*1105
 
-        ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.createAllNumberExpressedInSumOfSquares(factors);
+        ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.getAllAPofSquares(factors);
 
         assertEquals(14,apSquares.size());
 
@@ -145,7 +145,7 @@ public class SquareApTest{
 
         factors.addAll(factors);
 
-        ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.createAllNumberExpressedInSumOfSquares(factors);
+        ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.getAllAPofSquares(factors);
 
         Minimum3Tuppel3SquaresInAPBigNumber best3MatchAps = SquareUtil.findBestMatchOfAddingTwoComparedToThirdBisectionFromAps(apSquares);
         assertEquals(new BigInteger("40551216"), best3MatchAps.getDifference());
@@ -165,7 +165,7 @@ public class SquareApTest{
         System.out.println(factors);
         factors.addAll(factors);
 
-        ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.createAllNumberExpressedInSumOfSquares(factors);
+        ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.getAllAPofSquares(factors);
         assertEquals(1823,apSquares.size());        
         Minimum3Tuppel3SquaresInAPBigNumber best3MatchAps = SquareUtil.findBestMatchOfAddingTwoComparedToThirdBisectionFromAps(apSquares);
         assertEquals(new BigInteger("32509509696"), best3MatchAps.getDifference());
@@ -181,7 +181,7 @@ public class SquareApTest{
         factors.addAll(factors);
 
 
-        ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.createAllNumberExpressedInSumOfSquares(factors);   
+        ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.getAllAPofSquares(factors);   
         System.out.println(apSquares);   
         DecomposedPrime p1 = DecomposedPrime.create(new BigInteger("17"));
         NumberExpressedInSumOfSquares newOne = p1.getNumberExpressedInSumOfSquares();
@@ -241,7 +241,7 @@ public class SquareApTest{
 
         factors.addAll(factors);
 
-        ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.createAllNumberExpressedInSumOfSquares(factors);        
+        ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.getAllAPofSquares(factors);        
         Minimum3Tuppel3SquaresInAPBigNumber tup= SquareUtil.findBestMatchOfAddingTwoComparedToThirdBisectionFromAps(apSquares);
         Minimum3Tuppel3SquaresInAPBigNumber newTup=findBestNewFactor(tup, 100);
         System.out.println(newTup.getDifference());

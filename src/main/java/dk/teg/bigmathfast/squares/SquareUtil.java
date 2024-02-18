@@ -29,27 +29,41 @@ public class SquareUtil {
     public static void main(String[] args) {
         
         //Is square of the number
-        ArrayList<NumberExpressedInSumOfSquares> allAPofSquares = getAllAPofSquares(new BigInteger("1885"));
-        System.out.println(allAPofSquares);
+        ArrayList<NumberExpressedInSumOfSquares> allAPofSquares = getAllAPofSquares(new BigInteger("65"));
+        System.out.println(allAPofSquares.get(0).getAPBigNumber());
         
         Minimum3Tuppel3SquaresInAPBigNumber m= findBestMatchOfAddingTwoComparedToThirdBisectionFromAps(allAPofSquares);
         
         System.out.println(m.getAps());
         System.out.println(m.getDifference());
         
-        
+        /*
+         *  Create all arithmetric progressions (AP) of squares having the number middle^2 as middle value. <br>
+         *  Example: 1, 5^2 , 7^2 (1,25,49) is an AP of squares with step value = 24. <br>
+         *  <br>
+         *  If the factorization is know, it is faster to call the {@link #createAllNumberExpressedInSumOfSquares(ArrayList<BigInteger>) createAllNumberExpressedInSumOfSquares} <br>
+         *  See <a href="https://www.alpertron.com.ar/ECM.HTM">Write a number as all possible combination as sum of squares</a>     
+     */      
         
       }
     
+
+  
     
     /**
-     *  
+     * For a giver number calculate all possible decompositions into sum of two squares for the number^2 (the input squared) <br>
+     * Example: (for input  5)  5^2=3^2 +4^1<br>  
+     * Some numbers can have multiple decompositions.<br>
+     * 65^2=60^2+25^2,  65^2=33^2+56^2, 65=39^2+52^2,. 65^2=16^2+63^2<br>
+     * The calculation is optimized using Gaussian Integers.  See <a href=" https://www.thomas-egense.dk/math/squares_in_arithmetic_progression.html">Squares in atrimetic progression</a><br>
+     * There is a 1-1 correspondance between a square number express as sum of squares and an aritmetic progression of squares.<br>
+     * The decomposition:  5^2=3^2 +4^1  <-> 1^2,5^2, 7^2 (AP of squares)  
      * 
+     *  @param Middle number that must have all prime factors ==1 (mod4) and also not having 2 as a prime  factor. Will return null in that case<br>
+     *  @return List different decompositions in sum of squares.    
      */
-    public static ArrayList<NumberExpressedInSumOfSquares> getAllAPofSquares(BigInteger big){
-
-
-          ArrayList<BigInteger> factors = PollardRho.factorOnlyIfAllPrimeFactors1Mod4(big);
+    public static ArrayList<NumberExpressedInSumOfSquares> getAllAPofSquares(BigInteger number){
+          ArrayList<BigInteger> factors = PollardRho.factorOnlyIfAllPrimeFactors1Mod4(number);
                  
           if (factors == null || factors.size()==1){//aps.size will be 2 if only 1 factor      
               return new ArrayList<NumberExpressedInSumOfSquares>(); 
@@ -57,15 +71,24 @@ public class SquareUtil {
 
           factors.addAll(factors); 
 
-          ArrayList<NumberExpressedInSumOfSquares> aps = SquareUtil.createAllNumberExpressedInSumOfSquares(factors);
+          ArrayList<NumberExpressedInSumOfSquares> aps = SquareUtil.getAllAPofSquares(factors);
           return aps;
       }
     
+   
+    /**
+     * Express the number squared having the given factorization as all combinations of a sum of two squares.
+     * 
+     * If factorization is know, this method is a faster version of {@link #getAllAPofSquares((BigInteger) getAllAPofSquares}. <br>
+     * See method for full documentation
+     *  
+ 
+     * @param factors All factors must be ==1 (mod 4) and not 2.
+     * @return List different decompositions in sum of squares.
+     * 
+     */
     
-  //Important method! really fast!
-    //Factors are prime=1 mod 4!
-    //tilsvarende som http://wims.unice.fr/wims/en_tool~number~twosquares.en.html
-    public static ArrayList<NumberExpressedInSumOfSquares> createAllNumberExpressedInSumOfSquares(ArrayList<BigInteger> factors){
+    public static ArrayList<NumberExpressedInSumOfSquares> getAllAPofSquares(ArrayList<BigInteger> factors){
 
         ArrayList<NumberExpressedInSumOfSquares> numberOfExpressions = new ArrayList<NumberExpressedInSumOfSquares>();  
         DecomposedPrime p1 = DecomposedPrime.create(factors.get(0));
@@ -441,7 +464,7 @@ public class SquareUtil {
         }                  
         factors.addAll(factors); //Yes, factors are double since the AP  are for squares.
     
-        ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.createAllNumberExpressedInSumOfSquares(factors);            
+        ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.getAllAPofSquares(factors);            
         if (apSquares.size() <4) {
            // System.out.println("Skipping, not enough AP's for "+toTest  +" factors:"+factorsStr);
             throw new IllegalArgumentException("Not enough prime factors to generate 4 or more AP. Prime factors:"+factorsStr);

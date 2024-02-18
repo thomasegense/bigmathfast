@@ -62,7 +62,7 @@ public class SearchHourglass2 {
 	    factorsOrg.addAll(factors);
 	    factorsOrg.addAll(factors);
 	    
-        ArrayList<NumberExpressedInSumOfSquares> apSquaresBefore = SquareUtil.createAllNumberExpressedInSumOfSquares(factorsOrg);            
+        ArrayList<NumberExpressedInSumOfSquares> apSquaresBefore = SquareUtil.getAllAPofSquares(factorsOrg);            
         Minimum3Tuppel3SquaresInAPBigNumber best3MatchApsBefore = SquareUtil.findBestMatchOfAddingTwoComparedToThirdBisectionFromAps(apSquaresBefore);
         
         
@@ -76,7 +76,7 @@ public class SearchHourglass2 {
         
         
         
-        ArrayList<NumberExpressedInSumOfSquares> apSquaresAfter = SquareUtil.createAllNumberExpressedInSumOfSquares(factorsOrg);            
+        ArrayList<NumberExpressedInSumOfSquares> apSquaresAfter = SquareUtil.getAllAPofSquares(factorsOrg);            
         Minimum3Tuppel3SquaresInAPBigNumber best3MatchApsAfter = SquareUtil.findBestMatchOfAddingTwoComparedToThirdBisectionFromAps(apSquaresAfter);
         
         
