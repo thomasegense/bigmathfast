@@ -1,4 +1,4 @@
-package dk.teg.bigmathfast;
+package dk.teg.bigmathfast.util;
 
 import java.math.BigInteger;
 

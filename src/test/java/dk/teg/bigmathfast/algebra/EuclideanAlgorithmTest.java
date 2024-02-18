@@ -6,7 +6,7 @@ import java.math.BigInteger;
 
 import org.junit.jupiter.api.Test;
 
-import dk.teg.bigmathfast.TestUtils;
+import dk.teg.bigmathfast.util.TestUtils;
 
 public class EuclideanAlgorithmTest {
 

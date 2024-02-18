@@ -3,6 +3,7 @@ package dk.teg.bigmathfast.util;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class BigMathFastUtil {
 
@@ -33,6 +34,149 @@ public class BigMathFastUtil {
         return (Math.log10(bd_dbl)+number.toString().length()-1)/Math.log10(base);
     }
     
+    
+
+    /**
+     * This method will find the 3 elements a,b,c from in a list such that (a+b-c) has minimum value. <br>
+     * The best value if 0 if a+b=c <br>
+     * The algorithm is a fast as I could make it. Sorting the list and using bisection several times. <br>
+     * 
+     * 
+     * return BigInteger having the best minimum value. min(a+b-c) for all a,b,c in the input list
+     */
+    public static ArrayList<BigInteger> findBestMatchOfAddingTwoComparedToThirdBisection(ArrayList<BigInteger> numbers){
+        //System.out.println("findBestMatchOfAddingTwoComparedToThirdBisection start");
+
+        ArrayList<BigInteger> result = new  ArrayList<BigInteger> ();
+        Collections.sort(numbers);
+        //                                System.out.println(numbers);
+
+        //int numberOfIterations=0;
+        BigInteger bestMatch=new BigInteger("9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999");
+        BigInteger bestSumOfTwoPart1=null;
+        BigInteger bestSumOfTwoPart2=null;
+        BigInteger bestSumMiddle=null;
+
+        for (int i=0;i<numbers.size()-2;i++){
+            for (int j=i+1;j<numbers.size()-1;j++){
+
+                BigInteger sumOfTwoPart1= numbers.get(i);
+                BigInteger sumOfTwoPart2= numbers.get(j);
+                BigInteger sumOfTwo=sumOfTwoPart1.add(sumOfTwoPart2); 
+
+
+                int minIndex=j+1;
+                int maxIndex=numbers.size();
+                int currentIndexJump= (maxIndex-minIndex)/2;
+                int currentIndex=Math.min(minIndex+currentIndexJump,maxIndex-1);
+
+                /*
+                        System.out.println("sumOfTwo:"+sumOfTwo);
+                        System.out.println("minIndex:"+minIndex);
+                        System.out.println("maxIndex:"+maxIndex);
+                        System.out.println("currentJump:"+currentIndexJump);
+                        System.out.println("currentIndex:"+currentIndex);
+                 */
+
+                //See if sumOfTwo allready higher that highest number. (which will then be best match with highest number).
+                //If it is higher, then return match and end complete method!
+
+                if (j==i+1){ //Two cosequtive numbers on list
+                    BigInteger differenceLast=sumOfTwo.subtract(numbers.get(maxIndex-1));
+
+                    BigInteger differenceLastAbs= differenceLast.abs();
+                    if (differenceLastAbs.compareTo(bestMatch)<0){
+                        bestMatch =differenceLastAbs; //Do not forget this match
+                        bestSumMiddle = numbers.get(maxIndex-1);
+                        bestSumOfTwoPart1=sumOfTwoPart1;
+                        bestSumOfTwoPart2=sumOfTwoPart2;
+                    }
+
+                    if (differenceLast.compareTo(BigInteger.ZERO)>0){
+
+                        //System.out.println("breaking! sumOfTwo:"+sumOfTwo+", last:"+numbers.get(maxIndex));
+                        //  break;
+                        //    System.out.println("findBestMatchOfAddingTwoComparedToThirdBisection end2");
+
+                        result.add(bestSumMiddle);
+                        result.add(bestSumOfTwoPart1);
+                        result.add(bestSumOfTwoPart2);
+                        result.add(bestMatch);
+
+                        return result;
+                    }
+                }
+
+
+                while (currentIndexJump !=0){ //main loop, bisection
+                    //                System.out.println("currentIndex:"+currentIndex);
+                    //                                        System.out.println("currentIndexJump:"+currentIndexJump);
+                    //                                        System.out.println("checking against:"+numbers.get(currentIndex));
+                    if (currentIndexJump%2==1 && currentIndexJump>1){
+                        currentIndexJump=(currentIndexJump+1)/2;                                                                                                                          
+                    }
+                    else{                                                
+                        currentIndexJump=(currentIndexJump)/2;
+                    }
+
+                    if (sumOfTwo.compareTo(numbers.get(currentIndex))> 0){              
+                        currentIndex=Math.min(currentIndex+currentIndexJump,maxIndex-1);
+                    }
+                    else{                                                
+                        currentIndex=Math.max(currentIndex-currentIndexJump,minIndex);                                                  
+                    }                                          
+                }//end main loop, bisection
+
+                //System.out.println("final bisection index:"+currentIndex);
+                //check the index number and one to each side for best match
+                BigInteger difference=null;
+                BigInteger differenceAbs=null;
+
+                if (currentIndex-1>=minIndex){
+                    //                System.out.println("final bisection index against:"+numbers.get(currentIndex-1));
+                    difference=sumOfTwo.subtract(numbers.get(currentIndex-1));
+                    differenceAbs= difference.abs();
+                    if (differenceAbs.compareTo(bestMatch)<0){
+                        bestMatch =differenceAbs;
+                        bestSumMiddle = numbers.get(currentIndex-1);                        
+                        bestSumOfTwoPart1=sumOfTwoPart1;
+                        bestSumOfTwoPart2=sumOfTwoPart2;
+                    }
+                }
+
+                //System.out.println("final bisection index against:"+numbers.get(currentIndex));
+                difference=sumOfTwo.subtract(numbers.get(currentIndex));
+                differenceAbs= difference.abs();
+                if (differenceAbs.compareTo(bestMatch)<0){                                        
+                    bestSumMiddle = numbers.get(currentIndex);
+                    bestMatch =differenceAbs;
+                    bestSumOfTwoPart1=sumOfTwoPart1;
+                    bestSumOfTwoPart2=sumOfTwoPart2;
+                }
+
+
+                if (currentIndex+1<=maxIndex-1){
+                    //                        System.out.println("final bisection index against:"+numbers.get(currentIndex+1));
+                    difference=sumOfTwo.subtract(numbers.get(currentIndex+1));
+                    differenceAbs= difference.abs();
+                    if (differenceAbs.compareTo(bestMatch)<0){                        
+                        bestMatch =differenceAbs;
+                        bestSumMiddle = numbers.get(currentIndex+1);
+                        bestSumOfTwoPart1=sumOfTwoPart1;
+                        bestSumOfTwoPart2=sumOfTwoPart2;
+                    }
+                }
+            }
+        }
+        //  System.out.println("findBestMatchOfAddingTwoComparedToThirdBisection end1");
+        result.add(bestSumMiddle);
+        result.add(bestSumOfTwoPart1);
+        result.add(bestSumOfTwoPart2);
+        result.add(bestMatch);
+
+        return result;
+    } 
+
 
     /**
      * Calculate the squareroot rounded down to nearest Integer
