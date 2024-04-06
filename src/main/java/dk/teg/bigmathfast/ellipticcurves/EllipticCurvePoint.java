@@ -21,6 +21,11 @@ public class EllipticCurvePoint {
     public BigFraction getY() {
         return y;
     }
+
+    @Override
+    public String toString() {
+        return "EllipticCurvePoint [x=" + x + ", y=" + y + "]";
+    }
            
     
     
