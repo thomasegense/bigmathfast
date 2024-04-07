@@ -115,7 +115,7 @@ public class SearchHourglass {
           Minimum3Tuppel3SquaresInAPBigNumber best3MatchAps = SquareUtil.findBestMatchOfAddingTwoComparedToThirdBisectionFromAps(apSquares);
       
          double q= SquareUtil.calculateQuality(best3MatchAps.getDifference(), toTest);
-        if (q>0.85d) {
+        if (q>0.8d) {
         
             System.out.println("q="+q + " #APS:"+apSquares.size() +" factors:"+factorsStr  +" n="+toTest);
             //System.out.println("Number="+ toTest +" diff:"+best3MatchAps.getDifference() +" q="+q + " #APS:"+apSquares.size() +" factors:"+factorsStr);

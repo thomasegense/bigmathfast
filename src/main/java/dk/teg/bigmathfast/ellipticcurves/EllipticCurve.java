@@ -1,12 +1,19 @@
 package dk.teg.bigmathfast.ellipticcurves;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import org.apache.commons.math3.fraction.BigFraction;
 
+import dk.teg.bigmathfast.squares.APRationalNumber;
+import dk.teg.bigmathfast.squares.SquareUtil;
+import dk.teg.bigmathfast.util.BigMathFastUtil;
+
 //see https://www.wikiwand.com/en/Elliptic_curve_point_multiplication
 public class EllipticCurve {
 
+    private static BigInteger B0=new BigInteger("0");
+    private static BigInteger B2=new BigInteger("2");
     BigInteger a;
     BigInteger b;
     
@@ -99,7 +106,41 @@ public class EllipticCurve {
      }
 
     
-
+   public APRationalNumber convertToApRational(EllipticCurvePoint p) {
+       
+       //test a is negative and square
+       if (a.compareTo(B0)>=0) {
+           throw new IllegalArgumentException("a is not negative");           
+       }
+       //todo validate -a is a square.
+       
+       BigFraction x=p.getX();
+       BigFraction y=p.getY();
+       
+       BigFraction xx=x.multiply(x);
+       BigFraction y2=y.multiply(new BigInteger("2"));
+       
+       BigInteger nn=a.multiply(new BigInteger("-1"));
+       BigInteger n=BigMathFastUtil.bigintroot(nn);       
+       BigFraction nx2=x.multiply(n).multiply(B2);
+       
+       //Create the 3 numenator and 3 denumeators for the rational AP
+       BigFraction n1= xx.subtract(nx2).subtract(nn);
+       BigFraction d1=y2;
+       
+       
+       BigFraction n2= xx.add(nn);
+       BigFraction d2=y2;
+       
+       
+       BigFraction n3= new BigFraction(nn).subtract(xx).subtract(nx2);
+       BigFraction d3=y2;
+      
+       APRationalNumber ap = new APRationalNumber(n1.divide(d1),n2.divide(d2),n3.divide(d3));
+       return ap;
+       
+   }
+     
 }
 
 

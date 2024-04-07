@@ -6,11 +6,12 @@ import java.util.ArrayList;
 import org.apache.commons.math3.fraction.BigFraction;
 
 import dk.teg.bigmathfast.BigMathFast;
-import dk.teg.bigmathfast.util.BigMathFastUtil;
+
 
 /**
  * @see https://kconrad.math.uconn.edu/blurbs/ugradnumthy/3squarearithprog.pdf
  * 
+ * (a,b,c) is a rational AP for a^2,b^2,c^2
  * 
  */
 public class APRationalNumber {
@@ -18,9 +19,13 @@ public class APRationalNumber {
     private static BigInteger B1_NEG= new BigInteger("-1");
     private static BigInteger B2_NEG= new BigInteger("-2");
 
+    private BigFraction a;
+    private BigFraction b;
+    private BigFraction c;
+    
     public static void main(String... args) {
         
-        for (int i=1;i<1000;i++) {
+        for (int i=1;i<100;i++) {
             generateAP(new BigInteger("1"), new BigInteger(""+i));
             
         }
@@ -31,7 +36,15 @@ public class APRationalNumber {
 
     }
 
-
+    public APRationalNumber (BigFraction a,BigFraction b, BigFraction c) {
+        this.a=a;
+        this.b=b;
+        this.c=c;                
+    }
+    
+    
+    
+    //todo make constructor
     public static void generateAP(BigInteger numinator,  BigInteger denominator) {
 
         //first calculate (x,y) =
@@ -87,6 +100,24 @@ public class APRationalNumber {
         
         ArrayList<BigInteger> factorize = BigMathFast.factorize(squareMiddle);
         System.out.println("x="+x +" , y="+y +" AP:"+squareAP+" factors:"+factorize);     
+    }
+
+
+    public  BigFraction getA() {
+        return a;
+    }
+
+    public  BigFraction getB() {
+        return b;
+    }
+
+    public  BigFraction getC() {
+        return c;
+    }
+
+    @Override
+    public String toString() {
+        return "APRationalNumber [a=" + a + ", b=" + b + ", c=" + c + "]";
     }
 
 

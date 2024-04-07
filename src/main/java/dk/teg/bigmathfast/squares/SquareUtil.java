@@ -238,7 +238,7 @@ public class SquareUtil {
 
     /**
      * A sub-problem of the unsolved 'magic square of squares' is the Hourglass problem.<br>
-     * Finding 3 AP of squares with same middlenumber such the the difference of each from the middle number (step value) has s1+s2=s3. 
+     * Finding 3 AP of squares with same middle number such the the difference of each from the middle number (step value) has s1+s2=s3. 
      * 
      * Example:<br>
      * The number 1885 (5*13*29) has 7 different AP with 1885^2 as middle number.<br>
