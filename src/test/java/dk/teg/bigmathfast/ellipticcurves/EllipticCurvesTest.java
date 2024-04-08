@@ -6,11 +6,18 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 
 import org.apache.commons.math3.fraction.BigFraction;
 import org.junit.jupiter.api.Test;
 
+import dk.teg.bigmathfast.squares.APDoubleUnitCircle;
 import dk.teg.bigmathfast.squares.APRationalNumber;
+import dk.teg.bigmathfast.squares.Minimum3Tuppel3SquaresInAPBigNumber;
+import dk.teg.bigmathfast.squares.NumberExpressedInSumOfSquares;
+import dk.teg.bigmathfast.squares.SquareAPConversion;
+import dk.teg.bigmathfast.squares.SquareUtil;
+import dk.teg.bigmathfast.squares.Tuppel3SquaresInAPBigNumber;
 
 public class EllipticCurvesTest {
 
@@ -69,9 +76,53 @@ public class EllipticCurvesTest {
      assertEquals("1369",ppp.getX().getDenominator().toString());
      assertEquals("-2568456",ppp.getY().getNumerator().toString());
      assertEquals("50653",ppp.getY().getDenominator().toString());
-     
-    
-     
+         
     }
     
+
+    @Test
+    public void testTemp() {
+     
+        //curve is y^2=x^3-(24*24)x    (b=0)   
+        int a  =-24*24;         
+        EllipticCurve ec= new EllipticCurve(new BigInteger(""+a),new BigInteger("0")); 
+             
+        
+        //validate (-12,72) is on the curve
+        EllipticCurvePoint p = new EllipticCurvePoint(new BigFraction(-12),new BigFraction(72));         
+
+        EllipticCurvePoint p_cycle=p;
+        for (int i=0;i<10;i++) {
+                    
+            assertTrue(ec.validatePointOnCurve(p));
+            p_cycle=ec.addPoints(p_cycle, p);               
+            Tuppel3SquaresInAPBigNumber tup = ec.convertToTuppel3APBigNumber(p_cycle);
+            System.out.println("point:"+p_cycle +" AP rat:"+tup);
+        }
+        
+           
+        
+    }
+    
+    @Test
+    public void testTemp2() {
+     //get all AP and  map to circle to see pattern
+        ArrayList<NumberExpressedInSumOfSquares> allAPofSquares = SquareUtil.getAllAPofSquares(new BigInteger("1105"));
+        Minimum3Tuppel3SquaresInAPBigNumber bestDiffTuppels = SquareUtil.findBestMatchOfAddingTwoComparedToThirdBisectionFromAps(allAPofSquares);
+        
+        for (NumberExpressedInSumOfSquares n:allAPofSquares) {
+            APDoubleUnitCircle ap2Circle = SquareAPConversion.convertToAPDoubleUnitCircle(n.getAPBigNumber());
+            System.out.println(ap2Circle+"  AP:"+n);
+        }
+        
+        //Best diffs:
+       // APDoubleUnitCircle [x=23 / 65, y=89 / 65] approx:[x=0.35384615384615387, y=1.3692307692307693] , length=2  AP:(952,561,1105)
+       // APDoubleUnitCircle [x=1057 / 1105, y=1151 / 1105] approx:[x=0.9565610859728507, y=1.0416289592760182] , length=2  AP:(1104,47,1105)
+       //APDoubleUnitCircle [x=1 / 5, y=7 / 5] approx:[x=0.2, y=1.4] , length=2  AP:(884,663,1105)
+                System.out.println(bestDiffTuppels.getAps());
+        
+    
+    }
 }
+
+

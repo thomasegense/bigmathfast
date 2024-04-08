@@ -7,6 +7,7 @@ import org.apache.commons.math3.fraction.BigFraction;
 
 import dk.teg.bigmathfast.squares.APRationalNumber;
 import dk.teg.bigmathfast.squares.SquareUtil;
+import dk.teg.bigmathfast.squares.Tuppel3SquaresInAPBigNumber;
 import dk.teg.bigmathfast.util.BigMathFastUtil;
 
 //see https://www.wikiwand.com/en/Elliptic_curve_point_multiplication
@@ -141,6 +142,26 @@ public class EllipticCurve {
        
    }
      
+   
+   public Tuppel3SquaresInAPBigNumber convertToTuppel3APBigNumber(EllipticCurvePoint p) {
+       APRationalNumber ap_rat = convertToApRational(p);
+       
+       //Sanity check all denumenators are identical
+       if ( !(ap_rat.getA().getDenominator().equals(ap_rat.getB().getDenominator())) || 
+            !(ap_rat.getB().getDenominator().equals(ap_rat.getC().getDenominator())) ) {
+           System.out.println("logic error, not same denominator:"+ap_rat);
+           throw new IllegalArgumentException("logic error, not same denominator:\"+ap_rat");
+       }
+                   
+       BigInteger small=ap_rat.getA().getNumerator().abs();
+       BigInteger middle=ap_rat.getB().getNumerator().abs();
+       BigInteger high=ap_rat.getC().getNumerator().abs();
+       
+       BigInteger diff=(middle.pow(2)).subtract(small.pow(2));               
+       Tuppel3SquaresInAPBigNumber tup = new Tuppel3SquaresInAPBigNumber(small,middle,high,diff);                           
+       return tup;              
+   }
+   
 }
 
 
