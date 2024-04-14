@@ -14,12 +14,24 @@ public class APDoubleUnitCircle {
     }
 
 
+    public BigFraction getX() {
+        return x;
+    }
+
+
+    public BigFraction getY() {
+        return y;
+    }
+
+
     @Override
     public String toString() {
         BigFraction length=(x.multiply(x)).add(y.multiply(y));//sanity check
         
         return "APDoubleUnitCircle [x=" + x + ", y=" + y + "] approx:[x=" + x.doubleValue() + ", y=" + y.doubleValue() + "] , length="+length;
     }
+    
+    
     
     
     
