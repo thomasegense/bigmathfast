@@ -7,6 +7,7 @@ import java.util.Collections;
 
 public class BigMathFastUtil {
 
+       private static final BigInteger B_MINUS1 = new BigInteger("-1");
        private static final BigInteger B1 = new BigInteger("1");
        private static final BigInteger B4 = new BigInteger("4");
 
@@ -52,7 +53,7 @@ public class BigMathFastUtil {
         //                                System.out.println(numbers);
 
         //int numberOfIterations=0;
-        BigInteger bestMatch=new BigInteger("9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999");
+        BigInteger bestMatch=B_MINUS1;
         BigInteger bestSumOfTwoPart1=null;
         BigInteger bestSumOfTwoPart2=null;
         BigInteger bestSumMiddle=null;
@@ -85,7 +86,7 @@ public class BigMathFastUtil {
                     BigInteger differenceLast=sumOfTwo.subtract(numbers.get(maxIndex-1));
 
                     BigInteger differenceLastAbs= differenceLast.abs();
-                    if (differenceLastAbs.compareTo(bestMatch)<0){
+                    if (bestMatch.equals(B_MINUS1) || bestMatch.compareTo(bestMatch)<0){
                         bestMatch =differenceLastAbs; //Do not forget this match
                         bestSumMiddle = numbers.get(maxIndex-1);
                         bestSumOfTwoPart1=sumOfTwoPart1;

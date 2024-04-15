@@ -97,7 +97,7 @@ public class EllipticCurvesTest {
             assertTrue(ec.validatePointOnCurve(p));
             p_cycle=ec.addPoints(p_cycle, p);               
             Tuppel3SquaresInAPBigNumber tup = SquareAPConversion.convertToTuppel3APBigNumber(ec, p_cycle);
-            System.out.println("point:"+p_cycle +" AP rat:"+tup);
+            System.out.println("point:"+p_cycle +" tup rat:"+tup);
         }
         
            
