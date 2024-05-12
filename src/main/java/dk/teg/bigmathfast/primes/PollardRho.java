@@ -63,11 +63,11 @@ public class PollardRho {
 
     
     //Will return primefactors if all are =1 mod 4. Else return null
-    public static ArrayList<BigInteger> factorOnlyIfAllPrimeFactors1Mod4(BigInteger N) {                    
+    public static ArrayList<BigInteger> factorOnlyIfAllPrimeFactors1Mod4(BigInteger N) throws Exception{                    
         return factorOnlyIfAllPrimeFactors1Mod4(N,new ArrayList<BigInteger>());    
     }
     
-    // return null is any prime =3 (mod4)
+    // throws Exception if any prime =3 (mod4)
     private static ArrayList<BigInteger> factorOnlyIfAllPrimeFactors1Mod4(BigInteger N, ArrayList<BigInteger> currentFactors) {
       
       
@@ -80,8 +80,8 @@ public class PollardRho {
             return currentFactors;
           }           
            
-          else{
-              return null;
+          else{//Early termination
+              throw new IllegalArgumentException("A factor found is not ==1 (mod 4). Factor:"+N);
            }
           }
       BigInteger divisor = rho(N);
