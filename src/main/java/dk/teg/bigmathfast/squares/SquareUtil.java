@@ -70,9 +70,18 @@ public class SquareUtil {
      *  @param Middle number that must have all prime factors ==1 (mod4) and also not having 2 as a prime  factor. Will return null in that case<br>
      *  @return List different decompositions in sum of squares.    
      */
-    public static ArrayList<NumberExpressedInSumOfSquares> getAllAPofSquares(BigInteger number){
-        ArrayList<BigInteger> factors = PollardRho.factorOnlyIfAllPrimeFactors1Mod4(number);
-
+    public static ArrayList<NumberExpressedInSumOfSquares> getAllAPofSquares(BigInteger number)  {
+        
+        
+        ArrayList<BigInteger> factors = null;
+        try {
+            factors = PollardRho.factorOnlyIfAllPrimeFactors1Mod4(number);        
+        }
+        catch(Exception e) {
+            System.out.println(e.getMessage());
+            return null;            
+        }
+        
         if (factors == null || factors.size()==1){//aps.size will be 2 if only 1 factor      
             return new ArrayList<NumberExpressedInSumOfSquares>(); 
         }       
@@ -82,8 +91,7 @@ public class SquareUtil {
         ArrayList<NumberExpressedInSumOfSquares> aps = SquareUtil.getAllAPofSquares(factors);
         return aps;
     }
-
-
+       
     /**
      * Express the number squared having the given factorization as all combinations of a sum of two squares.
      * 
