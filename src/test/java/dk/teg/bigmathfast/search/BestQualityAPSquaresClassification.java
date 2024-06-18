@@ -6,12 +6,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import dk.teg.bigmathfast.BigMathFast;
 import dk.teg.bigmathfast.squares.Minimum3Tuppel3SquaresInAPBigNumber;
 import dk.teg.bigmathfast.squares.NumberExpressedInSumOfSquares;
 import dk.teg.bigmathfast.squares.SquareUtil;
+import dk.teg.bigmathfast.squares.Tuppel3SquaresInAPBigNumber;
 
 /*
  * 
@@ -27,7 +30,7 @@ public class BestQualityAPSquaresClassification {
         
         
 
-        Path path = Paths.get("E:\\studie\\bigmathfast\\ap.txt");
+        Path path = Paths.get("/home/teg/eclipse-workspace/bigmathfast/AP.txt");
         BufferedReader reader = Files.newBufferedReader(path);        
         String line;
         while(( line = reader.readLine()) != null ) {
@@ -75,12 +78,30 @@ public class BestQualityAPSquaresClassification {
        System.out.print("<td>"+ apSquares.size()+"</td>");
        System.out.print("<td>"+ best3MatchAps.getDifference()+"</td>");
        System.out.print("<td>"+ ancestor+"</td>");
-       System.out.print("<td>"+ best3MatchAps.getAps()+"</td>");
+       System.out.print("<td>"+ getAps(best3MatchAps.getAps())+"</td>");
        System.out.println("</tr>");
     //   System.out.println("Number="+ toTest +" diff:"+best3MatchAps.getDifference() +" q="+q + " #APS:"+apSquares.size() +" factors:"+factorsStr + "ancestor:"+ancestor);
-      
-       
+                
   }
+    
+    private static String getAps(List<NumberExpressedInSumOfSquares> aps) {
+        
+        List<Tuppel3SquaresInAPBigNumber> listBig= new ArrayList<>();
+        listBig.add(aps.get(0).getAPBigNumber());
+        listBig.add(aps.get(1).getAPBigNumber());
+        listBig.add(aps.get(2).getAPBigNumber());
+        
+        Collections.sort(listBig, Comparator.comparing(Tuppel3SquaresInAPBigNumber::getDifference));
+        
+        String val="";
+        val=val+listBig.get(0); //This first
+        val=val+" , ";
+        val=val+listBig.get(1);
+        val=val+" , ";
+        val=val+listBig.get(2);
+        
+        return val;
+    }
     
     /**
      * Calculate the quality for the number having the factors as input.
