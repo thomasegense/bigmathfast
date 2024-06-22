@@ -224,12 +224,20 @@ public class BigMathFastUtil {
      * @return true if all factors are ==1 (mod 4)
      */
     public static boolean allFactors1Mod4(ArrayList<BigInteger> factors) {
-        for (BigInteger b:factors) {
-            if (!b.mod(B4).equals(B1)) {         
+        for (BigInteger b:factors) {        
+        	if (!is1Mod4(b)) {         
                 return false;
             }
         }
         return true;
+    }
+    
+    public static boolean is1Mod4(BigInteger n) {
+    	if (!n.mod(B4).equals(B1)) {         
+            return false;
+        }
+    	return true;
+    	
     }
     
     

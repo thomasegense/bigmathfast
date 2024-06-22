@@ -145,7 +145,7 @@ public class SquareUtil {
      * @param n1 A number expressed as sum of squares
      * @param n2 A number expressed as sum of squares
      * 
-     * @return The product n1*n2 express as a number of squeres. There can be 1 or 2 different solutions.
+     * @return The product n1*n2 express as a sum of squares. There can be 1 or 2 different solutions.
      * 
      */
     
@@ -207,6 +207,15 @@ public class SquareUtil {
     }
 
 
+    
+    /**
+     * Not optimized! Also should only be called if the difference is very small (high ratio).
+     * 
+     * 
+     * @param aps
+     * @return The 3 APS that gives the minimum difference
+     */
+    
     public static Minimum3Tuppel3SquaresInAPBigNumber findBestMatchOfAddingTwoComparedToThirdBisectionFromAps(ArrayList<NumberExpressedInSumOfSquares> aps){
         ArrayList<BigInteger> list = new         ArrayList<BigInteger>();
 
@@ -223,10 +232,8 @@ public class SquareUtil {
         BigInteger bestMatch=results.remove(3); //Difference, not from an AP
         ArrayList<NumberExpressedInSumOfSquares > bestAps = new ArrayList<NumberExpressedInSumOfSquares>();  
 
-
-
         for (NumberExpressedInSumOfSquares ap : aps) {
-            Tuppel3SquaresInAPBigNumber tuppelAP = ap.getAPBigNumber(); 
+            Tuppel3SquaresInAPBigNumber tuppelAP = ap.getAPBigNumber();
 
             if (results.contains(tuppelAP.getDifference())) {
                 bestAps.add(ap); 	           
@@ -241,6 +248,30 @@ public class SquareUtil {
     }
 
 
+    
+    /**
+     * TODO
+     * 
+     * @param aps
+     * @return
+     */
+    public static BigInteger findMinDifferenceOfAddingTwoComparedToThirdBisectionFromAps(ArrayList<NumberExpressedInSumOfSquares> aps){
+        ArrayList<BigInteger> list = new  ArrayList<BigInteger>();
+
+        for (int i=0;i<aps.size();i++){
+            // no need to match the AP=(n,n,n,0) case.
+            if (!aps.get(i).getAPBigNumber().getDifference().equals(B0)){
+            	list.add(aps.get(i).getAPBigNumber().getDifference());
+             }
+        }
+
+        ArrayList<BigInteger> results = BigMathFastUtil.findBestMatchOfAddingTwoComparedToThirdBisection(list);             
+                       
+        return results.get(3);
+        	
+    }
+
+    
 
 
 

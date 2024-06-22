@@ -18,7 +18,7 @@ public class DecomposedPrime {
             return getFromCache(b);
         }
 
-            // not use cache
+         // not use cache
         return new DecomposedPrime(b);
 
     }
