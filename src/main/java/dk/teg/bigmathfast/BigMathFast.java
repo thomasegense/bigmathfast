@@ -60,8 +60,8 @@ public class BigMathFast {
      * A number with 70 digits will be factorized in 30 seconds in worst case.
      * The complexity dependens on the second largest prime factor.
      * If the second largest prime factor is larger than 45 digits, it can take
-     * many days for factorize.   
-     *    
+     * many days to factorize.   
+     *
      * @see https://en.wikipedia.org/wiki/Pollard%27s_rho_algorithm
      * @see https://www.alpertron.com.ar/ECM.HTM
      *   
