@@ -1,8 +1,12 @@
 
 package dk.teg.bigmathfast.search;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 
 import dk.teg.bigmathfast.BigMathFast;
@@ -65,27 +69,32 @@ public class SearchHourglass {
 	private final static BigInteger B1= new BigInteger("1");
 	private final static BigInteger B4= new BigInteger("4");
 	private static BigInteger currentNumber= null;
-	private static double minQuality= 0d;
+	private static double minQuality= 1.d;
+	private static String logFile=null;
 
 	public static void main(String[] args) throws Exception{
-		int numberOfThreads=1;
-		currentNumber= new BigInteger("21242099354121");
-		//currentNumber= new BigInteger("5");
-		minQuality=1.01d;
-	
-		while (!BigMathFastUtil.is1Mod4(currentNumber)) {
+		if (args.length!=4) {
+			System.out.println("Arguments are <number of threads>(int) <quality>(double> <start number>(BigInteger/String) <logFile>(String) ");			
+		}
+		
+		
+		 int numberOfThreads=Integer.parseInt(args[0]);
+		 minQuality=Double.parseDouble(args[1]);
+		 
+		//currentNumber= new BigInteger("22242099354121");
+		currentNumber= new BigInteger(args[2]);
+		logFile=args[3];
+		    		
+		while (!BigMathFastUtil.is1Mod4(currentNumber)) { //start from a 1 (mod 4) number
 			currentNumber=currentNumber.add(B1);			
 		}
 		
-		System.out.println("Starting #threads="+numberOfThreads +" with log-quality="+minQuality);
-		
-		
+		System.out.println("Starting #threads="+numberOfThreads +" with log-quality="+minQuality +" from startNumber:"+currentNumber +" and log file:"+logFile);
+				
 	    for (int i =0;i<numberOfThreads;i++) {
 	    	Thread t= new Thread(new SearchHourglass().new SearchHourglassThread(i));	    			
 	    	t.start();
-	    }
-        
-	    
+	    }        	    
 	}
 
 
@@ -106,13 +115,21 @@ public class SearchHourglass {
 		public void run()
 		{
 						
+		//	BigInteger stop=new BigInteger("22242111854121");
 			System.out.println("Started thread:"+threadNumber);
 			long start=System.currentTimeMillis();
 			while (true) {            
 				try {
 				
 				BigInteger next=getNext();
-		
+		        //System.out.println(next);
+		    
+			/*  For performance testing      
+		        if (next.equals(stop)) {
+		        	System.out.println("Stop, time:"+(System.currentTimeMillis()-start));
+		        	System.exit(1);
+		        }
+		    */    
 				
 				ArrayList<BigInteger> factors = BigMathFast.factorize(next);
 				String factorsStr=factors.toString();
@@ -133,9 +150,10 @@ public class SearchHourglass {
 				BigInteger diff = SquareUtil.findMinDifferenceOfAddingTwoComparedToThirdBisectionFromAps(apSquares);
 				double quality= SquareUtil.calculateQuality(  diff, next);
 				
-				if (quality>minQuality) {        
-					System.out.println(next+" quality="+quality + " #APS:"+apSquares.size() +" factors:"+factorsStr  );
-					//System.out.println("Number="+ toTest +" diff:"+best3MatchAps.getDifference() +" q="+q + " #APS:"+apSquares.size() +" factors:"+factorsStr);
+				if (quality>minQuality) {
+					String line=(next+" quality="+quality + " #APS:"+apSquares.size() +" factors:"+factorsStr);
+					System.out.println(line);					
+                    appendToLogFile(line);
 				}
 
 				}
@@ -145,5 +163,13 @@ public class SearchHourglass {
 			}	
 		}
 	}
+	
+	private synchronized void appendToLogFile(String line) throws IOException {
+				
+        line=line+"\n";
+	    Files.write( Paths.get(logFile), line.getBytes(), StandardOpenOption.APPEND);
+		
+	}
+	
 }
 
