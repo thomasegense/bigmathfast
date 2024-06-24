@@ -66,110 +66,110 @@ q=1.3192 #APS:41 factors:[5, 17, 1093, 8933] n=829920365
  * 
  */
 public class SearchHourglass {
-	private final static BigInteger B1= new BigInteger("1");
-	private final static BigInteger B4= new BigInteger("4");
-	private static BigInteger currentNumber= null;
-	private static double minQuality= 1.d;
-	private static String logFile=null;
+    private final static BigInteger B1= new BigInteger("1");
+    private final static BigInteger B4= new BigInteger("4");
+    private static BigInteger currentNumber= null;
+    private static double minQuality= 1.d;
+    private static String logFile=null;
 
-	public static void main(String[] args) throws Exception{
-		if (args.length!=4) {
-			System.out.println("Arguments are <number of threads>(int) <quality>(double> <start number>(BigInteger/String) <logFile>(String) ");			
-		}
-		
-		
-		 int numberOfThreads=Integer.parseInt(args[0]);
-		 minQuality=Double.parseDouble(args[1]);
-		 
-		//currentNumber= new BigInteger("22242099354121");
-		currentNumber= new BigInteger(args[2]);
-		logFile=args[3];
-		    		
-		while (!BigMathFastUtil.is1Mod4(currentNumber)) { //start from a 1 (mod 4) number
-			currentNumber=currentNumber.add(B1);			
-		}
-		
-		System.out.println("Starting #threads="+numberOfThreads +" with log-quality="+minQuality +" from startNumber:"+currentNumber +" and log file:"+logFile);
-				
-	    for (int i =0;i<numberOfThreads;i++) {
-	    	Thread t= new Thread(new SearchHourglass().new SearchHourglassThread(i));	    			
-	    	t.start();
-	    }        	    
-	}
+    public static void main(String[] args) throws Exception{
+        if (args.length!=4) {
+            System.out.println("Arguments are <number of threads>(int) <quality>(double> <start number>(BigInteger/String) <logFile>(String) ");			
+        }
 
 
+        int numberOfThreads=Integer.parseInt(args[0]);
+        minQuality=Double.parseDouble(args[1]);
 
-	private static synchronized BigInteger getNext() {
-		currentNumber=currentNumber.add(B4);
-		return currentNumber;
-	}
+        //currentNumber= new BigInteger("22242099354121");
+        currentNumber= new BigInteger(args[2]);
+        logFile=args[3];
 
-	private class SearchHourglassThread implements Runnable {
+        while (!BigMathFastUtil.is1Mod4(currentNumber)) { //start from a 1 (mod 4) number
+            currentNumber=currentNumber.add(B1);			
+        }
 
-		private int threadNumber;
-		
-		public SearchHourglassThread(int threadNumber) {
-		  this.threadNumber=threadNumber;
-		}
-			
-		public void run()
-		{
-						
-		//	BigInteger stop=new BigInteger("22242111854121");
-			System.out.println("Started thread:"+threadNumber);
-			long start=System.currentTimeMillis();
-			while (true) {            
-				try {
-				
-				BigInteger next=getNext();
-		        //System.out.println(next);
-		    
-			/*  For performance testing      
+        System.out.println("Starting #threads="+numberOfThreads +" with log-quality="+minQuality +" from startNumber:"+currentNumber +" and log file:"+logFile);
+
+        for (int i =0;i<numberOfThreads;i++) {
+            Thread t= new Thread(new SearchHourglass().new SearchHourglassThread(i));	    			
+            t.start();
+        }        	    
+    }
+
+
+
+    private static synchronized BigInteger getNext() {
+        currentNumber=currentNumber.add(B4);
+        return currentNumber;
+    }
+
+    private class SearchHourglassThread implements Runnable {
+
+        private int threadNumber;
+
+        public SearchHourglassThread(int threadNumber) {
+            this.threadNumber=threadNumber;
+        }
+
+        public void run()
+        {
+
+            //	BigInteger stop=new BigInteger("22242111854121");
+            System.out.println("Started thread:"+threadNumber);
+            long start=System.currentTimeMillis();
+            while (true) {            
+                try {
+
+                    BigInteger next=getNext();
+                if (next.toString().endsWith("000005")){ //every million                   
+                    System.out.println(next);
+                }
+                    
+                    /*  For performance testing      
 		        if (next.equals(stop)) {
 		        	System.out.println("Stop, time:"+(System.currentTimeMillis()-start));
 		        	System.exit(1);
 		        }
-		    */    
-				
-				ArrayList<BigInteger> factors = BigMathFast.factorize(next);
-				String factorsStr=factors.toString();
-				if (!BigMathFastUtil.allFactors1Mod4(factors)) {
-					//     System.out.println("Skipping:"+toTest +" has factors == 3(mod 4). Factors:"+factorsStr);
-					continue;
-				}
+                     */    
 
-				factors.addAll(factors);
+                    ArrayList<BigInteger> factors = BigMathFast.factorize(next);
+                    String factorsStr=factors.toString();
+                    if (!BigMathFastUtil.allFactors1Mod4(factors)) {
+                        //     System.out.println("Skipping:"+toTest +" has factors == 3(mod 4). Factors:"+factorsStr);
+                        continue;
+                    }
 
-				ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.getAllAPofSquares(factors);            
-				if (apSquares.size() <4) {
-					// System.out.println("Skipping, not enough AP's for "+toTest  +" factors:"+factorsStr);
-					continue;
+                    factors.addAll(factors);
 
-				}
+                    ArrayList<NumberExpressedInSumOfSquares> apSquares = SquareUtil.getAllAPofSquares(factors);            
+                    if (apSquares.size() <4) {
+                        // System.out.println("Skipping, not enough AP's for "+toTest  +" factors:"+factorsStr);
+                        continue;
 
-				BigInteger diff = SquareUtil.findMinDifferenceOfAddingTwoComparedToThirdBisectionFromAps(apSquares);
-				double quality= SquareUtil.calculateQuality(  diff, next);
-				
-				if (quality>minQuality) {
-					String line=(next+" quality="+quality + " #APS:"+apSquares.size() +" factors:"+factorsStr);
-					System.out.println(line);					
-                    appendToLogFile(line);
-				}
+                    }
 
-				}
-				catch(Throwable e) {
-					e.printStackTrace();
-				}
-			}	
-		}
-	}
-	
-	private synchronized void appendToLogFile(String line) throws IOException {
-				
+                    BigInteger diff = SquareUtil.findMinDifferenceOfAddingTwoComparedToThirdBisectionFromAps(apSquares);
+                    double quality= SquareUtil.calculateQuality(  diff, next);
+
+                    if (quality>minQuality) {
+                        String line=(next+" quality="+quality + " #APS:"+apSquares.size() +" factors:"+factorsStr);
+                        System.out.println(line);					
+                        appendToLogFile(line);
+                    }
+
+                }
+                catch(Throwable e) {
+                    e.printStackTrace();
+                }
+            }	
+        }
+    }
+
+    private synchronized void appendToLogFile(String line) throws IOException {			
         line=line+"\n";
-	    Files.write( Paths.get(logFile), line.getBytes(), StandardOpenOption.APPEND);
-		
-	}
-	
+        Files.write( Paths.get(logFile), line.getBytes(), StandardOpenOption.APPEND);		
+    }
+
 }
 
