@@ -82,7 +82,7 @@ q=1.3192 #APS:41 factors:[5, 17, 1093, 8933] n=829920365
  * 
  */
 public class SearchHourglass {
-
+<<<<<<< HEAD
 	private final static BigInteger B1= new BigInteger("1");
 	private final static BigInteger B4= new BigInteger("4");
 	private static BigInteger currentNumber= null;
