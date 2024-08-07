@@ -34,7 +34,9 @@ public class SpectralLinesPlot {
     private final static BigInteger B1= new BigInteger("1");
     private final static BigInteger B2= new BigInteger("2");
     private final static BigInteger B4= new BigInteger("4");
+  
     
+    /*
     public static void main(String[] args) throws Exception {
 
         ArrayList<BigInteger> factors = new ArrayList<BigInteger>();
@@ -53,11 +55,19 @@ public class SpectralLinesPlot {
          System.out.println("wrote file:"+fileName);
         }
         
-        
-        
     }
+*/
 
-
+    public static void main(String[] args) throws Exception {
+    	
+    	 BigInteger number=new BigInteger("22225248657833");
+         BufferedImage spectralLinesPlot = SpectralLinesPlotImage(number,true);
+    	
+         BigInteger number2=new BigInteger("15502357");
+         BufferedImage spectralLinesPlot2 = SpectralLinesPlotImage(number2,true);
+         
+    }
+    
     public static BufferedImage SpectralLinesPlotImage(BigInteger number , boolean showImage) {
 
         ArrayList<NumberExpressedInSumOfSquares> allAPofSquares = SquareUtil.getAllAPofSquares(number);       
@@ -125,6 +135,7 @@ public class SpectralLinesPlot {
 
         for (BigInteger diff : diffValues) {
             Color color =  bestDiffs.contains(diff) ?  Color.red : Color.black;
+            if (color.equals(Color.black)) {continue;}
             plotVerticalLine(ig2, map2Double(diff ,smallest,highest), color);
         }
 
