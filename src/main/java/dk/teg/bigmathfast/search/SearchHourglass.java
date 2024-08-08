@@ -8,7 +8,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.Random;
 
 import dk.teg.bigmathfast.BigMathFast;
 import dk.teg.bigmathfast.squares.Minimum3Tuppel3SquaresInAPBigNumber;
@@ -63,99 +62,10 @@ q=1.2491 #APS:23 factors:[37, 37, 53, 5857] n=424966349
 q=1.2308 #APS:41 factors:[89, 109, 157, 313] n=476716841
 q=1.2065 #APS:41 factors:[13, 17, 101, 32413] n=723490573
 q=1.3192 #APS:41 factors:[5, 17, 1093, 8933] n=829920365
- 
- 
- 
- 
- ----------
- 21242099354125
- 1866061827057445 quality=1.0006 #APS:9842 factors:[5, 17, 29, 37, 53, 61, 157, 173, 233]
- 2611765668069389 quality=1.0058 #APS:5468 factors:[13, 17, 29, 41, 41, 89, 101, 149, 181]
- 1046289001298105 quality=1.0176 #APS:9842 factors:[5, 17, 29, 37, 53, 61, 97, 157, 233]
- 115032863786165 quality=1.0898 #APS:9842 factors:[5, 13, 17, 29, 37, 73, 89, 109, 137]
- 275617678902865 quality=1.0484 #APS:9842 factors:[5, 13, 17, 41, 53, 61, 73, 149, 173]
- 176018536076045 quality=1.0214 #APS:9842 factors:[5, 13, 17, 37, 41, 53, 89, 113, 197]
- 150347520106200157 quality=1.0077 #APS:5468 factors:[13, 37, 41, 61, 109, 157, 157, 181, 257]
- 312808051934485 quality=1.0572 #APS:5468 factors:[5, 17, 29, 29, 37, 53, 61, 157, 233]
- 817816391498665 quality=1.0132 #APS:9842 factors:[5, 13, 17, 41, 53, 73, 149, 173, 181]
- 179376440055865 quality=1.0664 #APS:2552 factors:[5, 13, 13, 13, 29, 61, 173, 229, 233]
+
  * 
  */
 public class SearchHourglass {
-<<<<<<< HEAD
-	private final static BigInteger B1= new BigInteger("1");
-	private final static BigInteger B4= new BigInteger("4");
-	private static BigInteger currentNumber= null;
-	private static double minQuality= 1.d;
-	private static String logFile=null;
-    private static boolean randomSearch=true; //not possible from command argument yet
-	private static ArrayList<BigInteger>  smallPrimes1Mod4= new ArrayList<BigInteger>();
-	private static Random ran = new Random();
-	
-    static {
-    	if (randomSearch) {
-    		for (int i=5;i<500000;i=i+4) {
-    			BigInteger b = new BigInteger(""+i);
-    			if (b.isProbablePrime(10)) {
-    				smallPrimes1Mod4.add(b);
-    			}
-    			
-    		}
-    		
-    	}
-    	System.out.println("Small primes 1 mod 4 cached.Size:"+smallPrimes1Mod4.size());
-    }
-    
-    
-	public static void main(String[] args) throws Exception{
-		if (args.length!=4) {
-			System.out.println("Arguments are <number of threads>(int) <quality>(double> <start number>(BigInteger/String) <logFile>(String) ");			
-		}
-		
-		
-		 int numberOfThreads=Integer.parseInt(args[0]);
-		 minQuality=Double.parseDouble(args[1]);
-		 
-		//currentNumber= new BigInteger("22242099354121");
-		currentNumber= new BigInteger(args[2]);
-		logFile=args[3];
-		    		
-		while (!BigMathFastUtil.is1Mod4(currentNumber)) { //start from a 1 (mod 4) number
-			currentNumber=currentNumber.add(B1);			
-		}
-		
-		System.out.println("Starting #threads="+numberOfThreads +" with log-quality="+minQuality +" from startNumber:"+currentNumber +" and log file:"+logFile);
-				
-	    for (int i =0;i<numberOfThreads;i++) {
-	    	Thread t= new Thread(new SearchHourglass().new SearchHourglassThread(i));	    			
-	    	t.start();
-	    }        	    
-	}
-	
-	
-	private static synchronized BigInteger getNext() {
-		if (randomSearch) { //8 primes
-			BigInteger b= new BigInteger("1");
-			for (int i=0;i<8;i++) { // 7 'small' primes
-				b=b.multiply(smallPrimes1Mod4.get(ran.nextInt(50)));
-								
-			}
-			 //1 very small
-			b=b.multiply(smallPrimes1Mod4.get(ran.nextInt(10)));			
-			//1 large
-		//	b=b.multiply(smallPrimes1Mod4.get(ran.nextInt(smallPrimes1Mod4.size())));
-			
-			if (b.compareTo(new BigInteger("21242099354125")) <0 ) {
-				b=b.multiply(smallPrimes1Mod4.get(ran.nextInt(smallPrimes1Mod4.size())));
-			}
-			
-			return b;
-		}
-		
-		currentNumber=currentNumber.add(B4);
-		return currentNumber;
-	}
-=======
     private final static BigInteger B1= new BigInteger("1");
     private final static BigInteger B4= new BigInteger("4");
     private static BigInteger currentNumber= null;
@@ -193,7 +103,6 @@ public class SearchHourglass {
         currentNumber=currentNumber.add(B4);
         return currentNumber;
     }
->>>>>>> branch 'master' of git@github.com:thomasegense/bigmathfast.git
 
     private class SearchHourglassThread implements Runnable {
 
@@ -240,17 +149,6 @@ public class SearchHourglass {
 
                     }
 
-<<<<<<< HEAD
-				}
-				catch(Throwable e) {
-					e.printStackTrace();
-				}
-			}	
-		}
-	}
-	
-	private synchronized void appendToLogFile(String line) throws IOException {				
-=======
                     BigInteger diff = SquareUtil.findMinDifferenceOfAddingTwoComparedToThirdBisectionFromAps(apSquares);
                     double quality= SquareUtil.calculateQuality(  diff, next);
 
@@ -269,7 +167,6 @@ public class SearchHourglass {
     }
 
     private synchronized void appendToLogFile(String line) throws IOException {			
->>>>>>> branch 'master' of git@github.com:thomasegense/bigmathfast.git
         line=line+"\n";
         Files.write( Paths.get(logFile), line.getBytes(), StandardOpenOption.APPEND);		
     }
