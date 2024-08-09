@@ -50,7 +50,7 @@ public class SquareUtil {
 
     /**
      * For a giver number calculate all possible decompositions into sum of two squares for the number^2 (the input squared). <br>
-     * Example: (for input  5)  5^2=3^2 +4^1<br>  
+     * Example: (for input  5)  5^2=3^2 +4^2<br>  
      * Some numbers can have multiple decompositions.<br>
      * 65^2=60^2+25^2,  65^2=33^2+56^2, 65=39^2+52^2,. 65^2=16^2+63^2<br>
      * The calculation is optimized using Gaussian Integers.  See <a href=" https://www.thomas-egense.dk/math/squares_in_arithmetic_progression.html">Squares in atrimetic progression</a><br>
