@@ -137,7 +137,7 @@ public class SquareUtil {
 
     /**
      * Having two numbers expressed as sum of squares the product can also be expressed as sum of squares.<br>
-     * Using the identity: (a^2+b^2)(c^2+dc^2)=(ac+bd)c^2+(ad-bc)c^2 = (ac-bd)c^2+(ad+bc)^2 <br>
+     * Using the identity: (a^2+b^2)(c^2+dc^2)=(ac+bd)^2+(ad-bc)^2 = (ac-bd)^2+(ad+bc)^2 <br>
      * There can be up to two different ways to express the product as a sum of squares.<br> 
      * Example:<br>
      * 5=1^2+2^2 and 13=3^2+2^3 -> 5*13=65=7^2+4^2=8^1+1^1 (two different solutions)

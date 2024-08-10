@@ -18,20 +18,23 @@ public class ApSquaresDifferenceWhenAddingFactors {
 				continue;
 			}		
   		 TreeSet<Double> newDiffs = newDiffs(b, factors);
-  		 System.out.println("factor:"+factors +" diffs:"+newDiffs);
+  		 System.out.println("factor:"+factors +" diffs:"+newDiffs +" quality:");
   	   
-  		 if (factors.compareTo(new BigInteger("13"))>0) {
-  			 break;
-  		 }
+  		 
+  		 
 		}
 		
 	}
 	
 	public static TreeSet<Double> newDiffs(BigInteger b, BigInteger factors){
 
+		BigInteger multiplied= b.multiply(factors);
+		AllApSquaresDifference allDif = new AllApSquaresDifference(b,null);
+		AllApSquaresDifference allDifWithFactor = new AllApSquaresDifference(multiplied,allDif.getHighestDifference().multiply(factors).multiply(factors));
 		
-		AllApSquaresDifference allDif = new AllApSquaresDifference(b); 
-		AllApSquaresDifference allDifWithFactor = new AllApSquaresDifference(b.multiply(factors));
+		
+ 
+		
 		
 		
 		//Set of the small squares in AP multiplied by the factors. This will be the new trivial small squares that is just multiplied by the factors			
@@ -43,11 +46,11 @@ public class ApSquaresDifferenceWhenAddingFactors {
 		TreeSet<Double> newDiffs= new TreeSet<Double>();
 		for (APSquareDifference apDif :allDifWithFactor.getApSquaresDifs()) {
 			if (trivialSmalls.contains(apDif.getSmall())) {			
-			System.out.println("OLD:"+apDif);
+		//	System.out.println("OLD:"+apDif);
 			}
 			else {
-				System.out.println("NEW:"+apDif);
-				newDiffs.add(apDif.getDiffPercentage());
+			//	System.out.println("NEW:"+apDif);
+			newDiffs.add(apDif.getDiffPercentage());
 			}						
 		}	
 		

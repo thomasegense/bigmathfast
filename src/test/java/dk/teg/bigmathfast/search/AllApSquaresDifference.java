@@ -17,6 +17,7 @@ public class AllApSquaresDifference {
 	private ArrayList<APSquareDifference> apSquaresDifs;
 	private double quality;
 	private BigInteger number;
+	private BigInteger highestDifference;
 	
 	Minimum3Tuppel3SquaresInAPBigNumber bestMatch;
 	
@@ -24,9 +25,13 @@ public class AllApSquaresDifference {
 
 	public static void main(String[] args) {
 
-		BigInteger b = new BigInteger("2665");
-		AllApSquaresDifference al = new AllApSquaresDifference(b.multiply(new BigInteger("5")));
-        System.out.println(al);
+		BigInteger b1 = new BigInteger("2665");
+		BigInteger b2 = new BigInteger("13325");
+		AllApSquaresDifference ap1 = new AllApSquaresDifference(b1,null);
+		AllApSquaresDifference ap2 = new AllApSquaresDifference(b2,ap1.getHighestDifference().multiply(new BigInteger("25")));
+		
+        System.out.println(ap1);
+        System.out.println(ap2);
 	}
 
 	/*
@@ -47,7 +52,15 @@ APSquareDifference [299,2665,3757]  d=7012824, p=0.989385, best=false]
 APSquareDifference [119,2665,3767]  d=7088064, p=1.0, best=true]
 
 	 */
-	public AllApSquaresDifference(BigInteger number) {
+	
+	/**
+	 * Find all AP of squares for the given number.
+	 * When calculating difference percentage, instead of using maximum difference you can inject another maximum difference to use instead.
+	 * 
+	 * @param maxDiff Optional max difference to use instead when calculating percentage
+	 * 
+	 */
+	public AllApSquaresDifference(BigInteger number, BigInteger maxDiff) {
 		this.number = number;
 
 		ArrayList<NumberExpressedInSumOfSquares> apStart = SquareUtil.getAllAPofSquares(number);
@@ -73,7 +86,15 @@ APSquareDifference [119,2665,3767]  d=7088064, p=1.0, best=true]
 		// Find minimum and maximum.
 		BigInteger smallest = diffValues.first();
 		BigInteger highest = diffValues.last();
-
+		highestDifference=highest;
+        
+		if (maxDiff != null) { //used for percentage calculations
+        	highest=maxDiff;
+        }
+		
+		//System.out.println("calculating differences using highest difference:"+highest);
+		
+		
 		for (NumberExpressedInSumOfSquares b : apStart) {
 			Tuppel3SquaresInAPBigNumber apBig = b.getAPBigNumber();
 			double diff = map2Double(apBig.getDifference(), smallest, highest);
@@ -129,7 +150,17 @@ APSquareDifference [119,2665,3767]  d=7088064, p=1.0, best=true]
 		this.bestMatch = bestMatch;
 	}
 
-    @Override
+	
+	
+    public double getQuality() {
+		return quality;
+	}
+
+	public BigInteger getHighestDifference() {
+		return highestDifference;
+	}
+
+	@Override
 	public String toString() {
 		StringBuilder b= new StringBuilder();
 		b.append("quality="+quality);
