@@ -1158,8 +1158,7 @@ final class Siqs implements Runnable
                       nbr = primeTrialDivisionData[median].value;
                       if (nbr < Divid)
                       {
-                        if (median == left &&
-                            congruencesFound >= matrixB.length)
+                        if (median == left )
                         {
                           return 0;
                         }
