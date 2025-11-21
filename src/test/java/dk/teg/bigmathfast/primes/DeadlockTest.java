@@ -26,7 +26,7 @@ public class DeadlockTest {
             
             String numberToFactor=number60Digits;
             System.out.println("Starting factoring for:"+numberToFactor);            
-            ArrayList<BigInteger> factors = Ecm.factor(new BigInteger(numberToFactor),1);  // 8 threads
+            ArrayList<BigInteger> factors = Ecm.factor(new BigInteger(numberToFactor),8);  // 8 threads
             System.out.println("Factors:"+factors + " time:"+(System.currentTimeMillis()-start));        
         
         }       
