@@ -179,6 +179,41 @@ public class BigMathFastUtil {
     } 
 
 
+    
+    
+    //Binary search, can probably be optimized.Maybe look at  Newton-Raphson
+    /**
+     * 
+     * @param num the large integer  to calculate the n-root for
+     * @param The root number. Ie 2 for square root etc.
+     * 
+     * @return The n-root of the number, rounded down 
+     */
+    public static BigInteger integerNthRoot(BigInteger num, int n) {
+        if (n <= 0 || num.signum() < 0) {
+            throw new IllegalArgumentException("N must be positive and number non-negative for integer root.");
+        }
+        if (n == 1) return num;
+
+        BigInteger low = BigInteger.ONE;
+        BigInteger high = num; // Upper bound can be optimized
+        BigInteger result = BigInteger.ZERO;
+
+        while (low.compareTo(high) <= 0) {
+            BigInteger mid = low.add(high).shiftRight(1); // (low + high) / 2
+            BigInteger power = mid.pow(n);
+
+            if (power.compareTo(num) <= 0) {
+                result = mid; // Potential root, try higher
+                low = mid.add(BigInteger.ONE);
+            } else {
+                high = mid.subtract(BigInteger.ONE); // Too high, try lower
+            }
+        }
+        return result; // Returns floor(num^(1/n))
+    }
+    
+    
     /**
      * Calculate the squareroot rounded down to nearest Integer
      * 
