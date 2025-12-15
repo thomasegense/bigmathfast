@@ -87,7 +87,7 @@ https://github.com/thomasegense/bigmathfast/releases/download/v1.0/bigmathfast-1
 Main method to try the factorization:
 
 ```
-java -cp bigmathfast-1.0-jar-with-dependencies.jar dk.teg.bigmathfast.BigMathFast 5519446392203102380014492878452138579184343772913786312128
+java -cp bigmathfast-1.1-jar-with-dependencies.jar dk.teg.bigmathfast.BigMathFast 5519446392203102380014492878452138579184343772913786312128
 ```
 
 
