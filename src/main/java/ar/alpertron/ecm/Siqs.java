@@ -14,6 +14,8 @@ import java.math.*;
 
 final class Siqs implements Runnable
 {
+       private Object lockPolySet = new Object();  // Add this field
+    
   FactorApplet ecmApplet;
   private String SIQSInfoText;
   private int numberThreads;
@@ -2316,14 +2318,14 @@ final class Siqs implements Runnable
     for (threadNumber=0; threadNumber<numberThreads; threadNumber++)
     {
       new Thread(this).start();                // Start new thread.
-      synchronized(amodq)
+      synchronized(lockPolySet)
       {
         while (threadArray[threadNumber] == null &&
                ecmApplet.getTerminateThread() == false)
         {
           try
           {
-            amodq.wait();
+            lockPolySet.wait();
           } catch (InterruptedException ie) {}
         }
       }
@@ -3345,7 +3347,7 @@ final class Siqs implements Runnable
     int NumberLengthA, NumberLengthB;
     int NumberLength = this.NumberLength+1;
 
-    synchronized(amodq)
+    synchronized(lockPolySet)
     {
       if (threadNumber == 0)
       {
@@ -3364,7 +3366,7 @@ final class Siqs implements Runnable
         }  
       }
       threadArray[threadNumber] = Thread.currentThread();
-      amodq.notifyAll();
+      lockPolySet.notifyAll();
     }               // End synchronized block.
     try
     {
@@ -3375,7 +3377,7 @@ nextpoly:
         {
           throw new ArithmeticException();
         }
-        synchronized(amodq)
+        synchronized(lockPolySet)
         {
           nbrThreadFinishedPolySet++;
           if (congruencesFound >= matrixB.length || factorSiqs != null)
@@ -3610,19 +3612,19 @@ nextpoly:
             {
               primeSieveData[aindex[index2]].difsoln = -1; // Do not sieve.
             }
-            synchronized(TestNbr2)
+            synchronized(lockPolySet)
             {
-              TestNbr2.notifyAll();
+              lockPolySet.notifyAll();
             }
           }           // End initializing first polynomial
         }             // End synchronized
-        synchronized(TestNbr2)
+        synchronized(lockPolySet)
         {
           while(nbrThreadFinishedPolySet < polySet * numberThreads)
           {
             try
             {
-              TestNbr2.wait();
+              lockPolySet.wait();
             }
             catch(InterruptedException ie) {}
           }
@@ -3633,7 +3635,7 @@ nextpoly:
           {
             continue nextpoly;
           }
-          synchronized(amodq)
+          synchronized(lockPolySet)
           {
             nbrThreadFinishedPolySet++;
           }
@@ -3779,7 +3781,7 @@ nextpoly:
             {
               continue nextpoly;
             }
-            synchronized(amodq)
+            synchronized(lockPolySet)
             {
               nbrThreadFinishedPolySet++;
             }
