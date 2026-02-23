@@ -23,11 +23,11 @@ public class DeadlockTest {
             String number80Digits = "93035149443954345347665179408833277091909532522394543659489519897196854705698057"; // takes 2 minutes with 8 threads
             String number90Digits = "235619162309580984868967318620943039846576548536713751373304739395055583551615448989006587"; // takes 30 minutes with 8 threads
             String numberRSA100=    "1522605027922533360535618378132637429718068114961380688657908494580122963258952897654000350692006139";
-            
-            String numberToFactor=number60Digits;
+            int threads=8;
+            String numberToFactor=number70Digits;
             System.out.println("Starting factoring for:"+numberToFactor);            
-            ArrayList<BigInteger> factors = Ecm.factor(new BigInteger(numberToFactor),1);  // 8 threads
-            System.out.println("Factors:"+factors + " time:"+(System.currentTimeMillis()-start));        
+            ArrayList<BigInteger> factors = Ecm.factor(new BigInteger(numberToFactor),threads);
+            System.out.println("Factors:"+factors + " time:"+(System.currentTimeMillis()-start) +" #threads:"+threads);        
         
         }       
     }
