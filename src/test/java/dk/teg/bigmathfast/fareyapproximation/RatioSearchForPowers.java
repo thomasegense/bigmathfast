@@ -23,9 +23,9 @@ public class RatioSearchForPowers {
 
         int bestDigit=100000;
 
-        int power=55;
+        int power=19;
 
-        for (int i=2;i<10000;i++) {
+        for (int i=10000;i<1000000;i++) {
 
              BigInteger val=new BigInteger(""+i);
             BigRational approxNRoot = approxNRoot(i, power);
