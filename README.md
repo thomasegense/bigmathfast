@@ -85,9 +85,11 @@ Download the stand alone jar:
 https://github.com/thomasegense/bigmathfast/releases/download/v1.0/bigmathfast-1.0-jar-with-dependencies.jar
 
 Main method to try the factorization:
+First argument is number of factor
+Second argument is number of threads (optional)
 
 ```
-java -cp bigmathfast-1.1-jar-with-dependencies.jar dk.teg.bigmathfast.BigMathFast 5519446392203102380014492878452138579184343772913786312128
+java -cp bigmathfast-1.2-jar-with-dependencies.jar dk.teg.bigmathfast.BigMathFast 5519446392203102380014492878452138579184343772913786312128 8
 ```
 
 
