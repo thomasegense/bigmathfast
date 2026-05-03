@@ -52,9 +52,9 @@ public class HourGlassSearch {
     // =========================================================================
     public static void main(String[] args) {
         HourGlassSearch search = new HourGlassSearch(
-            new BigInteger("29913579000005"),
-            8,
-            1.0
+            new BigInteger("13325"),
+            1,
+            0.00001
         );
         search.run();
     }
@@ -415,6 +415,27 @@ BigInteger[] threeSum(BigInteger[] d) {
                    + formatAP(n, triple[2]);
         System.out.printf("r=%.4f  n=%-22s  |e|=%-20s  APs=%d  %s%n",
             r, n, bestE, numAPs, aps);
+        
+        // Log primitive version on second line if reducible
+    BigInteger g = primitiveGcd(n, triple);
+    //System.out.println(n+":"+g);
+    if (!g.equals(ONE)) {
+        BigInteger nP = n.divide(g);
+        BigInteger g2 = g.multiply(g);
+        BigInteger[] tripleP = {
+            triple[0].divide(g2),
+            triple[1].divide(g2),
+            triple[2].divide(g2)
+        };
+        BigInteger bestEP = bestE.divide(g2);
+        String apsP = formatAP(nP, tripleP[0]) + " , "
+                    + formatAP(nP, tripleP[1]) + " , "
+                    + formatAP(nP, tripleP[2]);
+        double rP = calculateR(nP, bestEP);
+        System.out.printf("  prim r=%.4f  n=%-22s  |e|=%-20s  %s%n",
+            rP, nP, bestEP, apsP);
+    }
+        
     }
 
     private String formatAP(BigInteger n, BigInteger d) {
@@ -445,4 +466,20 @@ BigInteger[] threeSum(BigInteger[] d) {
         }
         return factors;
     }
+    
+    /**
+ * GCD of n and all 6 AP endpoints (x and y for each of the 3 APs).
+ * The step values are NOT included — we want the spatial GCD only.
+ */
+private BigInteger primitiveGcd(BigInteger n, BigInteger[] triple) {
+    BigInteger n2 = n.multiply(n);
+    BigInteger g  = n;
+    for (BigInteger d : triple) {
+        BigInteger x = n2.subtract(d).sqrt();
+        BigInteger y = n2.add(d).sqrt();
+        g = g.gcd(x).gcd(y);
+        if (g.equals(ONE)) return ONE;  // early exit
+    }
+    return g;
+}
 }
